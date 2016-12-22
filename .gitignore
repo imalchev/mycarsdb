@@ -42,8 +42,6 @@ bld/
 [Ll]og/
 
 
-.nuget/[Nn]u[Gg]et.exe
-
 *.sln.ide
 project.lock.json
 

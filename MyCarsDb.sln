@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCarsDb", "MyCarsDb\MyCarsDb.csproj", "{BF5DD32F-42D4-4F69-914A-E6CDF1BEC725}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCarsDb.Server.WebApi", "Server\MyCarsDb.Server.WebApi\MyCarsDb.Server.WebApi.csproj", "{5F56B516-F275-41F4-AB0A-04A699815806}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{8B6026DF-EAA4-4B65-9448-CA836D6BCDBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{665A529D-86DB-4EE0-87F3-319B6A796F89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCarsDb.Data", "Data\MyCarsDb.Data\MyCarsDb.Data.csproj", "{B8B38AC9-0927-4DF3-B261-DAA9661CE572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +17,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF5DD32F-42D4-4F69-914A-E6CDF1BEC725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF5DD32F-42D4-4F69-914A-E6CDF1BEC725}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF5DD32F-42D4-4F69-914A-E6CDF1BEC725}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF5DD32F-42D4-4F69-914A-E6CDF1BEC725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F56B516-F275-41F4-AB0A-04A699815806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F56B516-F275-41F4-AB0A-04A699815806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F56B516-F275-41F4-AB0A-04A699815806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F56B516-F275-41F4-AB0A-04A699815806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B38AC9-0927-4DF3-B261-DAA9661CE572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B38AC9-0927-4DF3-B261-DAA9661CE572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B38AC9-0927-4DF3-B261-DAA9661CE572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B38AC9-0927-4DF3-B261-DAA9661CE572}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F56B516-F275-41F4-AB0A-04A699815806} = {8B6026DF-EAA4-4B65-9448-CA836D6BCDBA}
+		{B8B38AC9-0927-4DF3-B261-DAA9661CE572} = {665A529D-86DB-4EE0-87F3-319B6A796F89}
 	EndGlobalSection
 EndGlobal
