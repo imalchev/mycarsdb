@@ -57,13 +57,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Attributes\DecimalAttribute.cs" />
+    <Compile Include="Common\Attributes\DecimalAttributeConvention.cs" />
+    <Compile Include="Common\Attributes\TimeAttribute.cs" />
+    <Compile Include="Common\Attributes\TimeAttributeConvention.cs" />
     <Compile Include="Contracts\IMyCarsDbContext.cs" />
-    <Compile Include="Identity\MyCarsDbIdentityRole.cs" />
-    <Compile Include="Identity\MyCarsDbIdentityUser.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Fueling.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserClaim.cs" />
+    <Compile Include="Models\UserLogin.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserToVehicle.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="MyCarsDbContext.cs" />
@@ -73,7 +79,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Enums\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

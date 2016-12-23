@@ -1,8 +1,16 @@
 ﻿namespace MyCarsDb.Data.Models
 {
-    using MyCarsDb.Data.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;    
 
-    public class Role : MyCarsDbIdentityRole
+    public class Role : IdentityRole<int, UserRole>
     {
+        public Role()
+        {
+        }
+
+        public Role(string name)
+        {
+            this.Name = name;
+        }
     }
 }

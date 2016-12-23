@@ -1,4 +1,4 @@
-﻿namespace MyCarsDb.Server.WebApi.Auth
+﻿namespace MyCarsDb.Server.WebApi.Config
 {
     using System;
 
@@ -7,7 +7,10 @@
 
     using Owin;
 
-    public class AuthStartup
+    using MyCarsDb.Data;
+    using MyCarsDb.Server.WebApi.Auth;
+
+    public class AuthConfig
     {
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
@@ -15,8 +18,11 @@
 
         public static void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the web api token endpoint
+            // Configure the db context and user manager to use a single instance per request
+            app.CreatePerOwinContext(MyCarsDbContext.Create);
+            app.CreatePerOwinContext<MyCarsDbUserManager>(MyCarsDbUserManager.Create);
 
+            // Configure the web api token endpoint
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
