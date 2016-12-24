@@ -19,6 +19,6 @@ import { VehicleComponent } from './vehicle/vehicle.component';
     HttpModule
   ],
   providers: [ LocalStorageService, AuthService ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -8,7 +8,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-// import HTTP_STATUS_CODES from 'http-status-enum';
+import HTTP_STATUS_CODES from 'http-status-enum';
 
 import { LocalStorageService } from './local-storage.service';
 
@@ -174,7 +174,7 @@ export class AuthService {
                 return Observable.throw(constants.CHECK_INTERNET);
             }
 
-            if (errorResponse.status === 400) { // HTTP_STATUS_CODES.BAD_REQUEST
+            if (errorResponse.status ===  HTTP_STATUS_CODES.BAD_REQUEST) {
                 let rejectResponse: ErrorLoginResponseModel = errorResponse.json();
                 if (rejectResponse.error || rejectResponse.error_description) {
                     return Observable.throw(rejectResponse);
@@ -202,13 +202,13 @@ export class AuthService {
 
             let errorObj: any = errorResponse.json();
 
-            if (errorResponse.status === 401) { // HTTP_STATUS_CODES.UNAUTHORIZED
+            if (errorResponse.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                 let errorText: string = errorObj.message;
 
                 return Observable.throw(errorText || '');
             }
 
-            if (errorResponse.status === 400) { // HTTP_STATUS_CODES.BAD_REQUEST
+            if (errorResponse.status ===  HTTP_STATUS_CODES.BAD_REQUEST) {
                 let badRequest: BadRequest = errorObj;
                 if (badRequest.message || badRequest.errorMessages) {
                     return Observable.throw(badRequest);
