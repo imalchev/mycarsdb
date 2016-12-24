@@ -40,8 +40,6 @@
             modelBuilder.Entity<UserLogin>().ToTable("Logins");
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

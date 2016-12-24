@@ -61,3 +61,6 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
