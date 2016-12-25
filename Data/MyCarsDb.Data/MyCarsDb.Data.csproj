@@ -63,7 +63,12 @@
     <Compile Include="Common\Attributes\TimeAttributeConvention.cs" />
     <Compile Include="Contracts\IMyCarsDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Enums\FuelCalculationType.cs" />
+    <Compile Include="Models\Enums\FuelType.cs" />
+    <Compile Include="Models\Enums\UserToVehicleAccessType.cs" />
+    <Compile Include="Models\Enums\VehicleType.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\FuelCalculation.cs" />
     <Compile Include="Models\Fueling.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
@@ -72,6 +77,7 @@
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\UserToVehicle.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehicleModel.cs" />
     <Compile Include="MyCarsDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,7 +86,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Enums\" />
+    <Folder Include="Models\Base\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -27,7 +27,7 @@
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 // Endpoint address
-                TokenEndpointPath = new PathString("/Users/Login"),
+                TokenEndpointPath = new PathString("/api/Users/Login"),
 
                 // Configure the application for OAuth based flow
                 Provider = new MyCarsDbOAuthAuthorizationServerProvider(PublicClientId),
@@ -35,7 +35,7 @@
                 // Default access tokens are valid for about 1 month
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),
 
-                // TODO: Set to false in production !
+                // TO DO: Set to false in production !
                 AllowInsecureHttp = true,                
             };
             app.UseOAuthAuthorizationServer(OAuthOptions);
