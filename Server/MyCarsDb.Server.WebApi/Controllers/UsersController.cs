@@ -12,6 +12,7 @@
     using MyCarsDb.Server.WebApi.Controllers.Base;
     using MyCarsDb.Server.WebApi.DataTransferModels;
 
+    [Authorize]
     public class UsersController : BaseController
     {
         private MyCarsDbUserManager _userManager;
@@ -30,7 +31,7 @@
         [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterUser model)
+        public async Task<IHttpActionResult> Register(RegisterUserModel model)
         {
             if (!ModelState.IsValid)
             {

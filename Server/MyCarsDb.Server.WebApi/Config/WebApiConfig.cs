@@ -3,12 +3,18 @@
     using System.Web.Http;
     using System.Web.Http.Cors;
 
+    using MyCarsDb.Server.WebApi.Infrastructure.Formatters;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-            var cors = new EnableCorsAttribute("localhost:4200", "*", "*");
+            // Web API configuration and services            
+            config.Formatters.Clear();
+            config.Formatters.Add(new BrowserJsonFormatter());
+
+            // enable cors
+            var cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
             config.EnableCors(cors);
 
             // Web API routes

@@ -45,9 +45,13 @@
         
         public virtual IDbSet<Vehicle> Vehicles { get; set; }
 
+        public virtual IDbSet<VehicleMake> VehicleMakes { get; set; }
+
         public virtual IDbSet<VehicleModel> VehicleModels { get; set; }
 
         public virtual IDbSet<UserToVehicle> UsersToVehicles { get; set; }
+
+        public virtual IDbSet<Event> Events { get; set; }
 
         public virtual IDbSet<Fueling> Fuelings { get; set; }
 

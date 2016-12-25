@@ -2,8 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
-    using MyCarsDb.Data.Models.Base;
+    
     using MyCarsDb.Data.Common.Attributes;
     using MyCarsDb.Data.Models.Enums;
 

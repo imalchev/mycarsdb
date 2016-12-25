@@ -9,16 +9,27 @@
 
     public abstract class BaseController : ApiController
     {
-        protected MyCarsDbContext _dbContext;
+        private MyCarsDbContext _dbContext;
 
         public BaseController()
-        {
-            _dbContext = Request.GetOwinContext().Get<MyCarsDbContext>();           
+        {           
         }
 
         public BaseController(MyCarsDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        protected MyCarsDbContext DbContext
+        {
+            get
+            {
+                return _dbContext ?? Request.GetOwinContext().Get<MyCarsDbContext>();
+            }
+            private set
+            {
+                _dbContext = value;
+            }
         }
     }
 }

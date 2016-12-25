@@ -1,4 +1,4 @@
-﻿namespace MyCarsDb.Data.Models.Base
+﻿namespace MyCarsDb.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations.Schema;

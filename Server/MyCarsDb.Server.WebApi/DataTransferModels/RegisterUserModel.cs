@@ -1,6 +1,6 @@
 ﻿namespace MyCarsDb.Server.WebApi.DataTransferModels
 {
-    public class RegisterUser
+    public class RegisterUserModel
     {
         public string Email { get; set; }
 
