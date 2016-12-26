@@ -7,6 +7,7 @@ import { LocalStorageService, AuthService } from './services';
 
 import { AppComponent } from './app.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
+import { DatepickerModule } from 'ng2-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { VehicleComponent } from './vehicle/vehicle.component';
     VehicleComponent
   ],
   imports: [
+    DatepickerModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule
