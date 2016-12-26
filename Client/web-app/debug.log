@@ -1,2 +1,4 @@
 [1224/164640:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
 [1224/164640:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[1226/085026:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[1226/085026:ERROR:node_debugger.cc(86)] Cannot start debugger server

@@ -8,13 +8,14 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-import HTTP_STATUS_CODES from 'http-status-enum';
+// import HTTP_STATUS_CODES from 'http-status-enum';
 
 import { LocalStorageService } from './local-storage.service';
 
 import { LoginResponseModel, SuccessLoginResponseModel, ErrorLoginResponseModel, RegisterUserModel } from '../models/auth.models';
 import { BadRequest } from '../models/common.models';
 import * as constants from '../common/constants';
+import * as httpStatusCodes from '../common/httpStatusCodes';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 const TOKEN_VALID_TO_KEY = 'token_valid_to';
@@ -33,8 +34,19 @@ export class AuthService {
     *   @param {string} password - password 
     */
     public login(username: string, password: string): Observable<SuccessLoginResponseModel | string> {
-        return this._login(username, password)
-            .map(successLogin => this._onLoginSucceed(<SuccessLoginResponseModel>successLogin, username))
+        let url = `${constants.BASE_API_URI}/users/login`;
+        let body = `username=${username}&password=${password}&grant_type=password`;
+        let headers = new Headers([
+            { 'Content-Type': 'application/x-www-form-urlencoded' },
+            { 'Accept': 'application/json' }]);
+        let options = new RequestOptions({ headers: headers });
+
+        return this._http.post(url, body, options)
+            .map((response: Response) => {
+                let jsonData: SuccessLoginResponseModel = response.json();
+                return this._onLoginSucceed(jsonData, username);
+            })
+            .catch(this._handleErrorOnLogin)
             .catch(error => this._onLoginRejected(error));
     }
 
@@ -42,7 +54,16 @@ export class AuthService {
      * @param {RegisterUserModel} registerUser - model of the user data
      */
     public register(registerUser: RegisterUserModel): Observable<void | BadRequest | string > {
-        return this._register(registerUser)
+        let url = `${constants.BASE_API_URI}/users/register`;
+        let body = JSON.stringify(registerUser);
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        let options = new RequestOptions({ headers: headers });
+
+        return this._http.post(url, body, options)
+            .catch(this._handleError)
             .catch(error => this._onRegisterRejected(error));
     }
 
@@ -109,7 +130,7 @@ export class AuthService {
     }
 
     private _onLoginRejected(reason: LoginResponseModel | string): Observable<string> {
-        if (reason instanceof String) {
+        if (typeof reason === 'string') {
             return Observable.throw(reason);
         }
 
@@ -123,58 +144,21 @@ export class AuthService {
         return Observable.throw(constants.UNEXPECTED_RESPONSE);
     }
 
-    private _onRegisterRejected(reason: BadRequest | string): Observable<string> {
-        if (reason instanceof String) {
-            return Observable.throw(reason);
-        }
-
-        let badRequest: BadRequest = reason;
-        if (badRequest.errorMessages) {
-            return Observable.throw(badRequest.errorMessages[0]);
-        }
-
-        return Observable.throw(badRequest.message);
-    }
-
-
-    private _login(username: string, password: string): Observable<SuccessLoginResponseModel | string | ErrorLoginResponseModel> {
-        let url = `${constants.BASE_API_URI}/users/login`;
-        let body = `username=${username}&password=${password}&grant_type=password&client_id=webApp`;
-        let headers = new Headers([
-            { 'Content-Type': 'application/x-www-form-urlencoded' },
-            { 'Accept': 'application/json' }]);
-        let options = new RequestOptions({ headers: headers });
-
-        return this._http.post(url, body, options)
-            .map((response: Response) => {
-                let jsonData: SuccessLoginResponseModel = response.json();
-                return jsonData;
-            })
-            .catch(this._handleErrorOnLogin);
-    }
-
-    private _register(registerUser: RegisterUserModel): Observable<void | string | BadRequest> {
-        let url = `${constants.BASE_API_URI}/users/register`;
-        let body = JSON.stringify(registerUser);
-
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-        let options = new RequestOptions({ headers: headers });
-
-        return this._http.post(url, body, options)
-            .catch(this._handleError);
-    }
-
     private _handleErrorOnLogin(error: any): Observable<string | ErrorLoginResponseModel> {
+        if (typeof error === 'string') {
+            return  Observable.throw(error);
+        }
+
         if (error instanceof Response) {
             let errorResponse: Response = error;
 
             if (errorResponse.status === 0) {
                 return Observable.throw(constants.CHECK_INTERNET);
+            } else if (errorResponse.status === httpStatusCodes.NOT_FOUND) {
+                return Observable.throw(constants.INVALID_REQUEST_ADDRESS);
             }
 
-            if (errorResponse.status ===  HTTP_STATUS_CODES.BAD_REQUEST) {
+            if (errorResponse.status ===  httpStatusCodes.BAD_REQUEST) {
                 let rejectResponse: ErrorLoginResponseModel = errorResponse.json();
                 if (rejectResponse.error || rejectResponse.error_description) {
                     return Observable.throw(rejectResponse);
@@ -184,33 +168,35 @@ export class AuthService {
             return Observable.throw(errorResponse.text());
         }
 
-        if (error instanceof String) {
-            return  Observable.throw(error);
-        }
-
         return Observable.throw(constants.UNEXPECTED_RESPONSE);
     }
 
     /** tries to get error message as BadRequest or string */
     private _handleError(error: any): Observable<string | BadRequest> {
+        if (typeof error === 'string') {
+            return  Observable.throw(error);
+        }
+
         if (error instanceof Response) {
             let errorResponse: Response = error;
 
             if (errorResponse.status === 0) {
                 return Observable.throw(constants.CHECK_INTERNET);
+            } else if (errorResponse.status === httpStatusCodes.NOT_FOUND) {
+                return Observable.throw(constants.INVALID_REQUEST_ADDRESS);
             }
 
             let errorObj: any = errorResponse.json();
 
-            if (errorResponse.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
+            if (errorResponse.status === httpStatusCodes.UNAUTHORIZED) {
                 let errorText: string = errorObj.message;
 
                 return Observable.throw(errorText || '');
             }
 
-            if (errorResponse.status ===  HTTP_STATUS_CODES.BAD_REQUEST) {
+            if (errorResponse.status ===  httpStatusCodes.BAD_REQUEST) {
                 let badRequest: BadRequest = errorObj;
-                if (badRequest.message || badRequest.errorMessages) {
+                if (badRequest.message || badRequest.modelState) {
                     return Observable.throw(badRequest);
                 }
 
@@ -224,10 +210,19 @@ export class AuthService {
             return Observable.throw(errorResponse.text() || constants.UNEXPECTED_RESPONSE);
         }
 
-         if (error instanceof String) {
-            return  Observable.throw(error);
+        return Observable.throw(constants.UNEXPECTED_RESPONSE);
+    }
+
+    private _onRegisterRejected(reason: BadRequest | string): Observable<string> {
+        if (typeof reason === 'string') {
+            return Observable.throw(reason);
         }
 
-        return Observable.throw(constants.UNEXPECTED_RESPONSE);
+        let badRequest: BadRequest = reason;
+        if (badRequest.modelState.errorMessages) {
+            return Observable.throw(badRequest.modelState.errorMessages[0]);
+        }
+
+        return Observable.throw(badRequest.message);
     }
 }

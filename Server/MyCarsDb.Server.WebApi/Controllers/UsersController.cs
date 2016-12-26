@@ -20,7 +20,7 @@
         public UsersController()
         {
             // TO DO: this should go through dependency injection containter
-            _userManager = Request.GetOwinContext().GetUserManager<MyCarsDbUserManager>();            
+            // _userManager = Request.GetOwinContext().GetUserManager<MyCarsDbUserManager>();            
         }
 
         public UsersController(MyCarsDbUserManager userManager)
@@ -28,19 +28,25 @@
             _userManager = userManager;
         }
 
+        protected MyCarsDbUserManager UserManager
+        {
+            get { return _userManager ?? Request.GetOwinContext().GetUserManager<MyCarsDbUserManager>(); }
+            set { _userManager = value; }
+        }
+
         [AllowAnonymous]
         [HttpPost]
-        [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterUserModel model)
         {
+            // TO DO: this should go through ModelValidationAttribute or validation should go to business layer
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             // TO DO: this should go through automapper in future .....
-            var newUser = new User { Email = model.Email, UserName = model.Name };
-            IdentityResult result = await _userManager.CreateAsync(newUser, model.Password);
+            var newUser = new User { Email = model.Email, UserName = model.Name, PhoneNumber = model.PhoneNumber };
+            IdentityResult result = await UserManager.CreateAsync(newUser, model.Password);
             if (!result.Succeeded)
             {
                 return this.GetErrorResult(result);

@@ -12,7 +12,7 @@
         private MyCarsDbContext _dbContext;
 
         public BaseController()
-        {           
+        {
         }
 
         public BaseController(MyCarsDbContext dbContext)
