@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {Vehicle} from './vehicle'
+import {Vehicle} from '../vehicle/vehicle'
 
 Injectable();
 export class VehicleService{
