@@ -1,4 +1,17 @@
-<p>
-  vehicle works!
-  
-</p>
+<div class="container">
+  <h3>Add Vehicle</h3>
+<form #vehicleForm="ngForm" (submit)="addVehicle(vehicleForm)">
+  <div class="form-group">
+    <label fro="regNumber">Рег.номер</label>
+    <input type="number" name="regNumber" [(ngModel)]="model.regNumber">
+  </div>
+   <div class="form-group">
+    <label>Макс. мощност</label>
+    <input type="number" name="power" [(ngModel)]="model.power">
+    <button class="btn btn-primary"></button>
+  </div>
+   <input type="submit" value="ads">
+</form>
+</div>
+Form {{model|json}}
+Angular {{vehicleForm.value|json}}
