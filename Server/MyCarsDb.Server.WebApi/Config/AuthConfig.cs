@@ -3,6 +3,7 @@
     using System;
 
     using Microsoft.Owin;
+    using Microsoft.Owin.Cors;
     using Microsoft.Owin.Security.OAuth;
 
     using Owin;
@@ -21,6 +22,9 @@
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(MyCarsDbContext.Create);
             app.CreatePerOwinContext<MyCarsDbUserManager>(MyCarsDbUserManager.Create);
+
+            // this enables cors for autentication requests
+            app.UseCors(CorsOptions.AllowAll);
 
             // Configure the web api token endpoint
             PublicClientId = "self";
