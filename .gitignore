@@ -28,6 +28,7 @@ obj/
 *.suo
 *.user
 
+connectionStrings.config
 
 # Build results
 [Dd]ebug/

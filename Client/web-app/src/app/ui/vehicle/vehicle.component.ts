@@ -19,7 +19,7 @@ this._vehicleService.addVehicle(vehicleForm.value)
 .subscribe(data => "")
   }
   model : VehicleModel = {manufactureDate : new Date()
-    ,power:null,exactModel:null, vehicleTypes:null,type:null,availableFuelTypes:null,fuelTypes:null,engineCapacity=null};
+    ,power:null,exactModel:null, vehicleTypes:null,type:null,availableFuelTypes:null,fuelTypes:null,engineCapacity:null};
 
   ngOnInit() {  
     var types = this._vehicleService.getVehicleTypes()
