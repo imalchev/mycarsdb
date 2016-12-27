@@ -45,7 +45,7 @@
             }
 
             // TO DO: this should go through automapper in future .....
-            var newUser = new User { Email = model.Email, UserName = model.Name, PhoneNumber = model.PhoneNumber };
+            var newUser = new User { Email = model.Email, UserName = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber };
             IdentityResult result = await UserManager.CreateAsync(newUser, model.Password);
             if (!result.Succeeded)
             {
