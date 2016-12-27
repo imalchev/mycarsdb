@@ -21,8 +21,7 @@
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "styles.css"
       ],
-      "scripts": [ 
-        "../node_modules/http-status-enum/lib/index.js"
+      "scripts": [         
       ],
       "environments": {
         "source": "environments/environment.ts",
