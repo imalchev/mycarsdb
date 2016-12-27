@@ -7,18 +7,20 @@ import { RouterModule }     from '@angular/router';
 import { LocalStorageService, AuthService } from './services';
 
 import { AppComponent } from './app.component';
-import { VehicleComponent } from './vehicle/vehicle.component';
+import { VehicleComponent } from './ui/vehicle/vehicle.component';
 import { DatepickerModule } from 'ng2-bootstrap/datepicker';
 import { RegisterComponent } from './ui/register/register.component';
 import { LoginComponent } from './ui/login/login.component';
 import { AppRoutingModule }     from './app-routing.module';
+import {ObjectPipe} from './common/Pipes/object.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     VehicleComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ObjectPipe
   ],
   imports: [
     DatepickerModule.forRoot(),

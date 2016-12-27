@@ -2,6 +2,7 @@
 {
     public enum VehicleType : short
     {
-
+        Car=1,
+        Motorbike=2
     }
 }

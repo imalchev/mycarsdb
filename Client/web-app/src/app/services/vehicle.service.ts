@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {Vehicle} from '../vehicle/vehicle'
+import {VehicleModel} from '../models/vehicle.models'
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import {Inject} from '@angular/core'
 import 'rxjs/Rx'
@@ -15,7 +15,7 @@ constructor(@Inject(Http) private _http:Http){
 
 }
 
-addVehicle(vehicle:Vehicle):Observable<any>{
+addVehicle(vehicle:VehicleModel):Observable<any>{
  let body = JSON.stringify(vehicle);
  let headers = new Headers({'Content-Type':'application/json'});
  let options = new RequestOptions({headers:headers});
@@ -27,4 +27,15 @@ addVehicle(vehicle:Vehicle):Observable<any>{
                 return jsonData;
             });
 }
+getVehicleTypes():Observable<string[]>{
+return this._http.get('http://localhost:52120/api/Vehicles/GetVehicleTypes')
+.map((response: Response) => <string[]>response.json())
+}
+
+getFuelTypes():Observable<string[]>{
+return this._http.get('http://localhost:52120/api/Vehicles/GetFuelTypes')
+.map((response: Response) => <string[]>response.json())
+}
+
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Vehicle} from './vehicle';
-import {VehicleService} from '../services/vehicle.service'
+import {VehicleModel} from '../../models/vehicle.models';
+import {VehicleService} from '../../services/vehicle.service'
 import {NgForm} from '@angular/forms'
 import {Http} from '@angular/http'
 
@@ -18,7 +18,15 @@ export class VehicleComponent implements OnInit {
 this._vehicleService.addVehicle(vehicleForm.value)
 .subscribe(data => "")
   }
-  model = new Vehicle(25,"42",new Date());
+  model : VehicleModel = {manufactureDate : new Date()
+    ,power:null,exactModel:null, vehicleTypes:null,type:null,availableFuelTypes:null,fuelTypes:null,engineCapacity=null};
+
   ngOnInit() {  
+    var types = this._vehicleService.getVehicleTypes()
+    .subscribe(types=>this.model.vehicleTypes= types)
+
+    var fuelTypes = this._vehicleService.getFuelTypes()
+    .subscribe(types=>this.model.availableFuelTypes= types)
   }
 }
+

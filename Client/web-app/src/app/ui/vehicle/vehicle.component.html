@@ -1,0 +1,55 @@
+<div class="container">
+  <h3>Add Vehicle</h3>
+<form #vehicleForm="ngForm" (submit)="addVehicle(vehicleForm)">
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-registration-mark"></span></span>
+    <input type="text" name="exactModel" [(ngModel)]="model.exactModel" required="required" class="form-control" placeholder="exact model ??? wtf">
+    </div>
+  </div>
+   <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-fire"></span></span>
+    <input type="number" name="power" [(ngModel)]="model.power" class="form-control" placeholder="Макс. мощост" >
+    </div>
+  </div>
+   <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-fire"></span></span>
+    <input type="number" name="engineCapacity" [(ngModel)]="model.engineCapacity" class="form-control" placeholder="обем на двигателя" >
+    </div>
+  </div>
+  <div class="form-group">
+<div class="input-group">
+  <span class="input-group-addon"><span class="glyphicon glyphicon-road"></span></span>
+<select class="form-control" required="required" name="type"
+  [(ngModel)]="model.type">
+  <option *ngFor="let type of model.vehicleTypes | objectPipe" [value]="type.key">
+    {{type.value}}
+  </option>
+</select >
+</div>
+  </div>
+    <div class="form-group">
+<div class="input-group">
+  <span class="input-group-addon"><span class="glyphicon glyphicon-road"></span></span>
+<select class="form-control" name="fuelTypes" required="required" multiple
+  [(ngModel)]="model.fuelTypes">
+  <option *ngFor="let type of model.availableFuelTypes | objectPipe" [value]="type.key">
+    {{type.value}}
+  </option>
+</select >
+</div>
+  </div>
+  <div class="form-group">
+    <label class="label label-default">Дата на производство</label>
+    <div class="input-group">
+  <datepicker name="manufactureDate" [(ngModel)]="model.manufactureDate" [datepickerMode]="'year'" [showWeeks]="false" placeholder="blah" >
+  </datepicker>
+  </div>
+  </div>
+   <input type="submit" value="ads">
+</form>
+</div>
+Form {{model|json}}
+Angular {{vehicleForm.value|json}}

@@ -22,7 +22,6 @@
         "styles.css"
       ],
       "scripts": [ 
-        "../node_modules/http-status-enum/lib/index.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

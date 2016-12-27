@@ -21,6 +21,6 @@
 
         public int? EngineCapacity { get; set; }
 
-        public IEnumerable<FuelType> FuelTypes { get; set; }
+        public IList<FuelType> FuelTypes { get; set; }
     }
 }
