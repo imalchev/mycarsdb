@@ -1,4 +1,6 @@
 export interface BadRequest {
     message: string;
-    errorMessages: Array<string>;
+    modelState: {
+        errorMessages: Array<string>;
+    }
 }

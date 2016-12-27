@@ -3,7 +3,7 @@ export class Vehicle{
     (
         public power:number,
         public regNumber:string,
-        public manufactureDate:Date 
+        public manufactoreDate:Date 
     ){
     }
 }

@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null"><span aria-hidden="true">&times;</span></button>
+                {{errorMessage}}
+            </div>
+
+            <h4>Register</h4>
+            <form #registerForm="ngForm" name="registerForm" (ngSubmit)="register($event)" novalidate>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span>
+                        <input type="email" [(ngModel)]="model.email" name="email" required="required" [pattern]="emailValidationRegex" minlength="5" maxlength="50" class="form-control" placeholder="Email" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                        <input type="password" [(ngModel)]="model.password" name="password" required="required" minlength="6" maxlength="50" class="form-control" placeholder="Парола" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-repeat"></span></span>
+                        <input type="password" [(ngModel)]="model.confirmPassword" name="confirmPassword" required="required" minlength="6" maxlength="50" class="form-control" placeholder="Повторете паролата" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input type="text" [(ngModel)]="model.name" name="name" minlength="3" required="required" maxlength="50" class="form-control" placeholder="Име" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                        <input type="tel" [(ngModel)]="model.phoneNumber" name="phoneNumber" required="required" class="form-control" placeholder="Телефонен номер" />
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <button type="submit" class="btn btn-default" [disabled]="!registerForm.form.valid">
+                        Register&nbsp;<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                TODO: remove this <br />
+                model: {{model | json}} 
+            </form>
+        </div>
+    </div>
+</div>
