@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent }       from './ui/login/login.component';
 import { RegisterComponent }    from './ui/register/register.component';
+import { VehicleComponent }       from  './ui/vehicle/vehicle.component';
 // import { DashboardComponent }   from '../dashboard/dashboard.component';
 // import { HomeComponent }        from '../../pages/home/home.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent }
+    { path: 'register', component: RegisterComponent },
+    {path: 'vehicle', component:VehicleComponent}
     // { path: 'detail/:id', component: HeroDetailComponent },
     // { path: 'heroes',     component: HeroesComponent }
 ];

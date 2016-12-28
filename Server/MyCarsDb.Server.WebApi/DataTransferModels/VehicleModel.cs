@@ -13,6 +13,9 @@
         [MaxLength(50)]
         public string ExactModel { get; set; }
 
+        [MaxLength(15)]
+        public string RegNumber { get; set; }
+
         public DateTime ManufactureDate { get; set; }
 
         public VehicleType Type { get; set; }

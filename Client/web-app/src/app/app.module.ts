@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule }     from '@angular/router';
-
-import { LocalStorageService, AuthService } from './services';
+import { LocalStorageService, AuthService,VehicleService } from './services';
 
 import { AppComponent } from './app.component';
 import { VehicleComponent } from './ui/vehicle/vehicle.component';
