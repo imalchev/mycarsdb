@@ -17,25 +17,25 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                        <input type="password" [(ngModel)]="model.password" name="password" required="required" minlength="6" maxlength="50" class="form-control" placeholder="Парола" />
+                        <input type="password" [(ngModel)]="model.password" name="password" required="required" minlength="6" maxlength="50" class="form-control" placeholder="Password" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-repeat"></span></span>
-                        <input type="password" [(ngModel)]="model.confirmPassword" name="confirmPassword" required="required" minlength="6" maxlength="50" class="form-control" placeholder="Повторете паролата" />
+                        <input type="password" [(ngModel)]="model.confirmPassword" name="confirmPassword" required="required" minlength="6" maxlength="50" class="form-control" placeholder="Repeat password" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                        <input type="text" [(ngModel)]="model.name" name="name" minlength="3" required="required" maxlength="50" class="form-control" placeholder="Име" />
+                        <input type="text" [(ngModel)]="model.name" name="name" minlength="3" required="required" maxlength="50" class="form-control" placeholder="Name" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
-                        <input type="tel" [(ngModel)]="model.phoneNumber" name="phoneNumber" required="required" class="form-control" placeholder="Телефонен номер" />
+                        <input type="tel" [(ngModel)]="model.phoneNumber" name="phoneNumber" required="required" class="form-control" placeholder="Phone number" />
                     </div>
                 </div>
                 <div class="form-group pull-right">
@@ -43,9 +43,6 @@
                         Register&nbsp;<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                     </button>
                 </div>
-
-                TODO: remove this <br />
-                model: {{model | json}} 
             </form>
         </div>
     </div>

@@ -3,23 +3,30 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule }     from '@angular/router';
-import { LocalStorageService, AuthService,VehicleService } from './services';
 
+import { DatepickerModule }   from 'ng2-bootstrap/datepicker';
+
+import { LocalStorageService, AuthService, VehicleService } from './services';
 import { AppComponent } from './app.component';
-import { VehicleComponent } from './ui/vehicle/vehicle.component';
-import { DatepickerModule } from 'ng2-bootstrap/datepicker';
-import { RegisterComponent } from './ui/register/register.component';
-import { LoginComponent } from './ui/login/login.component';
-import { AppRoutingModule }     from './app-routing.module';
-import {ObjectPipe} from './common/Pipes/object.pipe';
+import { VehicleComponent }   from './ui/vehicle/vehicle.component';
+import { RegisterComponent }  from './ui/register/register.component';
+import { LoginComponent }     from './ui/login/login.component';
+import { DashboardComponent } from './ui/layout/dashboard/dashboard.component';
+import { SidebarComponent }   from './ui/shared';
+import { AppRoutingModule }   from './app-routing.module';
+import { ObjectPipe } from './common/Pipes/object.pipe';
+import { HomeComponent } from './ui/pages/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DashboardComponent,
+    SidebarComponent,
     VehicleComponent,
     LoginComponent,
     RegisterComponent,
-    ObjectPipe
+    ObjectPipe,
+    HomeComponent
   ],
   imports: [
     DatepickerModule.forRoot(),

@@ -1,0 +1,114 @@
+
+#sidebar {
+  width: 235px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  color: #FFF;
+  background: #2c3e50;
+}
+#sidebar a {
+  cursor: pointer;
+}
+#sidebar .sidenav-outer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+#sidebar .sidenav-outer .menu-body {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+#sidebar .sidenav-outer .menu-body .nav li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 3px solid transparent;
+  list-style-type: none;
+}
+#sidebar .sidenav-outer .menu-body .nav li .website-name {
+  padding: 15px;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+#sidebar .sidenav-outer .menu-body .nav li .logo {
+  padding: 15px;
+  display: block;
+  text-align: center;
+  margin-left: -5px;
+}
+#sidebar .sidenav-outer .menu-body .nav li .logo p {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+#sidebar .sidenav-outer .menu-body .nav li a {
+  transition: all .2s ease-in-out;
+  display: block;
+  color: #FFF;
+}
+#sidebar .sidenav-outer .menu-body .nav li a:focus {
+  text-decoration: none;
+}
+#sidebar .sidenav-outer .menu-body .nav li a i {
+  display: inline-block;
+  width: 50px;
+  text-align: center;
+  font-size: 20px;
+  transition: all .3s ease;
+  line-height: 50px;
+  vertical-align: middle;
+}
+#sidebar .sidenav-outer .menu-body .nav li .submenu {
+  height: 0;
+  display: none;
+  transition: height .5s ease;
+}
+#sidebar .sidenav-outer .menu-body .nav li.expand ul.submenu {
+  height: auto !important;
+  display: block !important;
+  margin-left: 9px;
+}
+#sidebar .sidenav-outer .menu-body .nav li.expand ul.submenu li {
+  border-bottom: none;
+  padding: 5px 15px 15px;
+}
+#sidebar .sidenav-outer .menu-body .nav li.expand ul.submenu li a {
+  display: block;
+}
+#sidebar .sidenav-outer .menu-body .nav li:first-child {
+  border-bottom: none;
+}
+
+.nav > li {
+    position: unset;
+    display: list-item;
+    margin: unset;
+}
+
+.nav > li > a {
+    position: unset;
+    display: block;
+    padding: unset;    
+}
+
+.nav > li > a:hover {
+    background: unset;
+}
+
+.nav > li > a:focus {
+    background: unset;
+}
+
+.nav-pills > li > a {
+    border-radius: 0;
+}
+
+@media screen and (max-width: 768px) {
+  #sidebar {
+    left: -235px;
+  }
+}
+
+
