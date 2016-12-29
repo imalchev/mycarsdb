@@ -16,13 +16,19 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.isUserLoggedIn = this._authService.isLoggedIn();
+    this._authService.authEvent.subscribe(isLoggedOn => this.isUserLoggedIn = isLoggedOn);
   }
 
-  addExpandClass(element: any): void {
+  addExpandClass(element: string): void {
     if (element === this.showMenu) {
       this.showMenu = '0';
     } else {
       this.showMenu = element;
     }
+  }
+
+  logout(): void {
+    this._authService.logout();
+    // this.isUserLoggedIn = false;
   }
 }

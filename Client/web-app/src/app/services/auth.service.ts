@@ -8,9 +8,10 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-// import HTTP_STATUS_CODES from 'http-status-enum';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { LocalStorageService } from './local-storage.service';
+import { BaseHttpService } from './base-http.service';
 
 import { LoginResponseModel, SuccessLoginResponseModel, ErrorLoginResponseModel, RegisterUserModel } from '../models/auth.models';
 import { BadRequest } from '../models/common.models';
@@ -25,9 +26,18 @@ const REFRESH_TOKEN_KEY = 'refresh_token';
 const REFRESH_TOKEN_VALID_TO_KEY = 'refresh_token_valid_to';
 
 @Injectable()
-export class AuthService {
+export class AuthService extends BaseHttpService {
 
-  constructor(private _http: Http, private _localStorageService: LocalStorageService) { }
+    private _authEvent: BehaviorSubject<boolean>;
+
+    constructor(http: Http, private _localStorageService: LocalStorageService) {
+        super(http);
+        this._authEvent = new BehaviorSubject<boolean>(this.isLoggedIn());
+    }
+
+    public get authEvent(): Observable<boolean> {
+        return this._authEvent.asObservable();
+    }
 
     /** login user
     *   @param {string} username - username
@@ -44,6 +54,9 @@ export class AuthService {
         return this._http.post(url, body, options)
             .map((response: Response) => {
                 let jsonData: SuccessLoginResponseModel = response.json();
+
+                // emit successfull autentication
+                this._authEvent.next(true);
                 return this._onLoginSucceed(jsonData, username);
             })
             .catch(this._handleErrorOnLogin)
@@ -57,9 +70,7 @@ export class AuthService {
         let url = `${constants.BASE_API_URI}/users/register`;
         let body = JSON.stringify(registerUser);
 
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
+        let headers = this._getJsonHeaders();
         let options = new RequestOptions({ headers: headers });
 
         return this._http.post(url, body, options)
@@ -72,17 +83,17 @@ export class AuthService {
         if (!this._localStorageService.getItem(ACCESS_TOKEN_KEY)) {
             return false;
         }
-        
-        var tokenValidTo = this._localStorageService.getItem(TOKEN_VALID_TO_KEY);
+
+        let tokenValidTo = this._localStorageService.getItem(TOKEN_VALID_TO_KEY);
         if (!tokenValidTo) {
             return false;
         }
-        
+
         let tokenValidToDT = new Date(parseInt(tokenValidTo, 10));
         if (tokenValidToDT < new Date()) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -92,6 +103,9 @@ export class AuthService {
         this._localStorageService.removeItem(TOKEN_VALID_TO_KEY);
         this._localStorageService.removeItem(TOKEN_ISSUED_KEY);
         this._localStorageService.removeItem(USERNAME_KEY);
+
+        // emit successfull log out
+        this._authEvent.next(false);
     }
 
     /** Get username of logged user
@@ -114,6 +128,23 @@ export class AuthService {
         }
 
         return this._localStorageService.getItem(ACCESS_TOKEN_KEY);
+    }
+
+    /** generate Authorization header */
+    public getAuthorizationHeader(): Headers {
+        let authToken = this.getToken();
+
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return headers;
+    }
+
+    /** set authorization header and return the same headers */
+    public setAuthorizationHeader(headers: Headers): Headers {
+        let authToken = this.getToken();
+        headers.append('Authorization', `Bearer ${authToken}`);
+        return headers;
     }
 
     private _onLoginSucceed(loginResponse: SuccessLoginResponseModel, username: string): SuccessLoginResponseModel {
@@ -166,48 +197,6 @@ export class AuthService {
             }
 
             return Observable.throw(errorResponse.text());
-        }
-
-        return Observable.throw(constants.UNEXPECTED_RESPONSE);
-    }
-
-    /** tries to get error message as BadRequest or string */
-    private _handleError(error: any): Observable<string | BadRequest> {
-        if (typeof error === 'string') {
-            return  Observable.throw(error);
-        }
-
-        if (error instanceof Response) {
-            let errorResponse: Response = error;
-
-            if (errorResponse.status === 0) {
-                return Observable.throw(constants.CHECK_INTERNET);
-            } else if (errorResponse.status === httpStatusCodes.NOT_FOUND) {
-                return Observable.throw(constants.INVALID_REQUEST_ADDRESS);
-            }
-
-            let errorObj: any = errorResponse.json();
-
-            if (errorResponse.status === httpStatusCodes.UNAUTHORIZED) {
-                let errorText: string = errorObj.message;
-
-                return Observable.throw(errorText || '');
-            }
-
-            if (errorResponse.status ===  httpStatusCodes.BAD_REQUEST) {
-                let badRequest: BadRequest = errorObj;
-                if (badRequest.message || badRequest.modelState) {
-                    return Observable.throw(badRequest);
-                }
-
-                return Observable.throw(errorResponse.text());
-            }
-
-            if (errorObj && errorObj.message) {
-                return Observable.throw(errorObj.message);
-            }
-
-            return Observable.throw(errorResponse.text() || constants.UNEXPECTED_RESPONSE);
         }
 
         return Observable.throw(constants.UNEXPECTED_RESPONSE);
