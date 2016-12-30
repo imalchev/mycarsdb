@@ -14,24 +14,12 @@
 
     [Authorize]
     public class UsersController : BaseController
-    {
-        private MyCarsDbUserManager _userManager;
+    {        
 
         public UsersController()
         {
             // TO DO: this should go through dependency injection containter
             // _userManager = Request.GetOwinContext().GetUserManager<MyCarsDbUserManager>();            
-        }
-
-        public UsersController(MyCarsDbUserManager userManager)
-        {
-            _userManager = userManager;
-        }
-
-        protected MyCarsDbUserManager UserManager
-        {
-            get { return _userManager ?? Request.GetOwinContext().GetUserManager<MyCarsDbUserManager>(); }
-            set { _userManager = value; }
         }
 
         [AllowAnonymous]
