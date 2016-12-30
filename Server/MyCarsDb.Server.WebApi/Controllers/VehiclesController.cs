@@ -14,14 +14,15 @@
     [AllowAnonymous]
     public class VehiclesController : BaseController
     {
-        private readonly Dictionary<int,string> vehicleTypes = Enum.GetValues(typeof(VehicleType))
+        private readonly List<VehicleTypeModel> vehicleTypes 
+            = Enum.GetValues(typeof(VehicleType))
                .Cast<VehicleType>()
-               .ToDictionary(t => (int)t, t => t.ToString());
+               .Select(t => new VehicleTypeModel() { Id = (int)t,Name = t.ToString()}).ToList();
 
-        private readonly Dictionary<int,string> fuelTypes =
+        private readonly List<FuelTypeModel> fuelTypes =
             Enum.GetValues(typeof(FuelType))
                .Cast<FuelType>()
-               .ToDictionary(t => (int)t, t => t.ToString());
+               .Select(t => new FuelTypeModel() { Id = (int)t, Name = t.ToString() }).ToList();
 
 
         [HttpPost]
@@ -32,7 +33,7 @@
                 EngineCapacity = model.EngineCapacity,
                 FuelTypes = model.FuelTypes[0],//TODO: WTF
                 ExactModel = model.ExactModel,
-                RegNumber = "123",// изтрих го вече
+                RegNumber = model.RegNumber,
                 ManufactureDate = model.ManufactureDate,
                 Power = model.Power,
                 Type = model.Type
@@ -44,13 +45,29 @@
         }
 
         [HttpGet]
-        public Dictionary<int, string> GetVehicleTypes()
+        public List<VehicleMakeModel> GetMakes()
+        {
+            var makes = DbContext.VehicleMakes.ToList();
+            var makesModel = makes.Select(x => new VehicleMakeModel() {Id=x.Id,Name=x.Name }).ToList();
+            return makesModel;
+        }
+
+        [HttpGet]
+        public List<VehicleModelModel> GetModelsByMakeId(int id)
+        {
+            var modelsDb = DbContext.VehicleModels.Where(x => x.MakeId == id).ToList();
+            var models = modelsDb.Select(x => new VehicleModelModel() { Id = x.Id, Name = x.ModelName }).ToList();
+            return models;
+        }
+        [HttpGet]
+        public List<VehicleTypeModel> GetVehicleTypes()
         {
             return vehicleTypes;
         }
 
         [HttpGet]
-        public Dictionary<int, string> GetFuelTypes()
+        public List<FuelTypeModel> GetFuelTypes()
+
         {
             return fuelTypes;
         }

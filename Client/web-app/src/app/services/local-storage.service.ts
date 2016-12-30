@@ -5,11 +5,11 @@ export class LocalStorageService {
 
    public constructor() {
         if (typeof window === 'undefined') {
-            throw new Error('window is not define!');
+            throw new Error('window is not defined!');
         }
 
         if (typeof window.localStorage === 'undefined') {
-            throw new Error('window.localStorage is not define!');
+            throw new Error('window.localStorage is not defined!');
         }
    }
 

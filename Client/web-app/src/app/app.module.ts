@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule }     from '@angular/router';
 
-import { DatepickerModule }   from 'ng2-bootstrap/datepicker';
-
 import { LocalStorageService, AuthService, VehicleService } from './services';
 import { AppComponent } from './app.component';
 import { VehicleComponent }   from './ui/vehicle/vehicle.component';
@@ -17,6 +15,7 @@ import { AppRoutingModule }   from './app-routing.module';
 import { ObjectPipe } from './common/Pipes/object.pipe';
 import { HomeComponent } from './ui/pages/home/home.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,10 +25,10 @@ import { HomeComponent } from './ui/pages/home/home.component';
     LoginComponent,
     RegisterComponent,
     ObjectPipe,
-    HomeComponent
+    HomeComponent,
+   
   ],
   imports: [
-    DatepickerModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,

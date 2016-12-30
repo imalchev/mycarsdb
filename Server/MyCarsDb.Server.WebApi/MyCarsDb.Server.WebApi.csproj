@@ -152,8 +152,12 @@
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
+    <Compile Include="DataTransferModels\FuelTypeModel.cs" />
     <Compile Include="DataTransferModels\RegisterUserModel.cs" />
+    <Compile Include="DataTransferModels\VehicleMakeModel.cs" />
     <Compile Include="DataTransferModels\VehicleModel.cs" />
+    <Compile Include="DataTransferModels\VehicleModelModel.cs" />
+    <Compile Include="DataTransferModels\VehicleTypeModel.cs" />
     <Compile Include="Infrastructure\Formatters\BrowserJsonFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

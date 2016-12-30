@@ -1,10 +1,25 @@
-export interface VehicleModel{
-   power:number,
-   exactModel:string,
-   manufactureDate:Date
-   engineCapacity:int
-   vehicleTypes:any[]   
-   type:string
-   availableFuelTypes:any[];
-   fuelTypes:any[];
+export interface VehicleModel {
+   power: number;
+   exactModel: string;
+   manufactureDate: Date;
+   engineCapacity: number;
+   type: string;
+   regNumber:string,
+   makeId: number;
+   modelId: number;
+}
+
+export interface VehicleMakeModel {
+    id: number;
+    name: string;
+}
+
+export interface VehicleModelModel {
+    id: number;
+    name: string;
+}
+
+export interface VehicleTypeModel {
+    id: number;
+    name: string;
 }
