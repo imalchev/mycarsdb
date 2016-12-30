@@ -4,18 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule }     from '@angular/router';
 
+import { MyDatePickerModule } from 'mydatepicker';
+
 import { LocalStorageService, AuthService, VehicleService } from './services';
-import { AuthGuard } from './common/auth.guard';
-import { AppComponent } from './app.component';
+import { AuthGuard }          from './common';
+import { AppComponent }       from './app.component';
 import { VehicleComponent }   from './ui/vehicle/vehicle.component';
 import { RegisterComponent }  from './ui/register/register.component';
 import { LoginComponent }     from './ui/login/login.component';
 import { DashboardComponent } from './ui/layout/dashboard/dashboard.component';
 import { SidebarComponent }   from './ui/shared';
 import { AppRoutingModule }   from './app-routing.module';
-import { ObjectPipe } from './common/Pipes/object.pipe';
-import { HomeComponent } from './ui/pages/home/home.component';
-import { GarageComponent } from './ui/pages/garage/garage.component';
+import { HomeComponent }      from './ui/pages/home/home.component';
+import { GarageComponent }    from './ui/pages/garage/garage.component';
 
 
 @NgModule({
@@ -26,7 +27,6 @@ import { GarageComponent } from './ui/pages/garage/garage.component';
     VehicleComponent,
     LoginComponent,
     RegisterComponent,
-    ObjectPipe,
     HomeComponent,
     GarageComponent
   ],
@@ -34,7 +34,8 @@ import { GarageComponent } from './ui/pages/garage/garage.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MyDatePickerModule
   ],
   providers: [ LocalStorageService, AuthService, VehicleService, AuthGuard ],
   bootstrap: [ AppComponent ]
