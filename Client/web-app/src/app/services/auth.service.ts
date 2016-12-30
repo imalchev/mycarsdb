@@ -59,8 +59,7 @@ export class AuthService extends BaseHttpService {
                 this._authEvent.next(true);
                 return this._onLoginSucceed(jsonData, username);
             })
-            .catch(this._handleErrorOnLogin)
-            .catch(error => this._onLoginRejected(error));
+            .catch(this._handleErrorOnLogin);
     }
 
     /** registers user 
@@ -74,8 +73,7 @@ export class AuthService extends BaseHttpService {
         let options = new RequestOptions({ headers: headers });
 
         return this._http.post(url, body, options)
-            .catch(this._handleError)
-            .catch(error => this._onRegisterRejected(error));
+            .catch(this._handleError);
     }
 
     /** Check if user is logged in */
@@ -147,6 +145,8 @@ export class AuthService extends BaseHttpService {
         return headers;
     }
 
+
+
     private _onLoginSucceed(loginResponse: SuccessLoginResponseModel, username: string): SuccessLoginResponseModel {
         let loginDT = new Date(); // asume that login date is now
 
@@ -160,22 +160,7 @@ export class AuthService extends BaseHttpService {
         return loginResponse;
     }
 
-    private _onLoginRejected(reason: LoginResponseModel | string): Observable<string> {
-        if (typeof reason === 'string') {
-            return Observable.throw(reason);
-        }
-
-        let rejectLoginResponse: ErrorLoginResponseModel = reason;
-        if (rejectLoginResponse.error !== undefined && rejectLoginResponse.error_description !== undefined) {
-            if (rejectLoginResponse.error === 'invalid_grant') {
-                return Observable.throw(rejectLoginResponse.error_description);
-            }
-        }
-
-        return Observable.throw(constants.UNEXPECTED_RESPONSE);
-    }
-
-    private _handleErrorOnLogin(error: any): Observable<string | ErrorLoginResponseModel> {
+    private _handleErrorOnLogin(error: any): Observable<string> {
         if (typeof error === 'string') {
             return  Observable.throw(error);
         }
@@ -191,7 +176,7 @@ export class AuthService extends BaseHttpService {
 
             if (errorResponse.status ===  httpStatusCodes.BAD_REQUEST) {
                 let rejectResponse: ErrorLoginResponseModel = errorResponse.json();
-                if (rejectResponse.error || rejectResponse.error_description) {
+                if (rejectResponse.error === 'invalid_grant') {
                     return Observable.throw(rejectResponse);
                 }
             }
@@ -200,18 +185,5 @@ export class AuthService extends BaseHttpService {
         }
 
         return Observable.throw(constants.UNEXPECTED_RESPONSE);
-    }
-
-    private _onRegisterRejected(reason: BadRequest | string): Observable<string> {
-        if (typeof reason === 'string') {
-            return Observable.throw(reason);
-        }
-
-        let badRequest: BadRequest = reason;
-        if (badRequest.modelState.errorMessages) {
-            return Observable.throw(badRequest.modelState.errorMessages[0]);
-        }
-
-        return Observable.throw(badRequest.message);
     }
 }

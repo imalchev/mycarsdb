@@ -18,7 +18,7 @@ export abstract class BaseHttpService {
     }
 
     /** tries to get error message as BadRequest or string */
-    protected _handleError(error: any): Observable<string | BadRequest> {
+    protected _handleError(error: any): Observable<string> {
         if (typeof error === 'string') {
             return  Observable.throw(error);
         }
@@ -41,9 +41,12 @@ export abstract class BaseHttpService {
             }
 
             if (errorResponse.status ===  httpStatusCodes.BAD_REQUEST) {
-                let badRequest: BadRequest = errorObj;
-                if (badRequest.message || badRequest.modelState) {
-                    return Observable.throw(badRequest);
+                if (errorObj.message || errorObj.modelState) {
+                    if (errorObj.modelState.errorMessages) {
+                        return Observable.throw(errorObj.modelState.errorMessages[0]);
+                    }
+
+                    return Observable.throw(errorObj.message);
                 }
 
                 return Observable.throw(errorResponse.text());

@@ -7,6 +7,7 @@ import { RouterModule }     from '@angular/router';
 import { DatepickerModule }   from 'ng2-bootstrap/datepicker';
 
 import { LocalStorageService, AuthService, VehicleService } from './services';
+import { AuthGuard } from './common/auth.guard';
 import { AppComponent } from './app.component';
 import { VehicleComponent }   from './ui/vehicle/vehicle.component';
 import { RegisterComponent }  from './ui/register/register.component';
@@ -16,6 +17,7 @@ import { SidebarComponent }   from './ui/shared';
 import { AppRoutingModule }   from './app-routing.module';
 import { ObjectPipe } from './common/Pipes/object.pipe';
 import { HomeComponent } from './ui/pages/home/home.component';
+import { GarageComponent } from './ui/pages/garage/garage.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { HomeComponent } from './ui/pages/home/home.component';
     LoginComponent,
     RegisterComponent,
     ObjectPipe,
-    HomeComponent
+    HomeComponent,
+    GarageComponent
   ],
   imports: [
     DatepickerModule.forRoot(),
@@ -35,7 +38,7 @@ import { HomeComponent } from './ui/pages/home/home.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [ LocalStorageService, AuthService ],
+  providers: [ LocalStorageService, AuthService, VehicleService, AuthGuard ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

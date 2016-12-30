@@ -34,7 +34,6 @@
             try
             {
                 // good place to throw an exception for testing
-                // #if TEST ..............
 
                 MyCarsDbUserManager userManager = context.OwinContext.GetUserManager<MyCarsDbUserManager>();
                 if (userManager == null)

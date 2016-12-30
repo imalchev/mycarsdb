@@ -21,15 +21,13 @@
                             Also the name of the field corresponds to the name attribute so our first input will be firstName. -->        
                         <input #email name="email" type="email" ngModel required="required" minlength="5" [pattern]="emailValidationRegex" class="form-control" placeholder="Email" />
                     </div>
-                </div>
-                TODO: remove this: {{email.className}}
+                </div>                
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                         <input #password name="password" type="password" ngModel required="required" minlength="3" class="form-control" placeholder="Password" />
                     </div>
                 </div>
-                TODO: remove this: {{password.className}}
                 <div>
                     <button type="button" class="btn btn-default btn-sm" (click)="register()">
                         Register&nbsp;<span class="glyphicon glyphicon-user" aria-hidden="true"></span>

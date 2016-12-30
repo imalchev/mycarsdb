@@ -20,9 +20,9 @@
                     </a>
                 </li>
                 <li *ngIf="isUserLoggedIn">
-                    <a [routerLink]="['/vehicle']">
+                    <a [routerLink]="['/garage']">
                         <i class="fa fa-car"></i>
-                        <span>&nbsp; Vehicle</span>
+                        <span>&nbsp; Garage</span>
                     </a>
                 </li>
                 <li *ngIf="isUserLoggedIn" class="nested" [ngClass]="{'expand' : showMenu === 'pages' }">
