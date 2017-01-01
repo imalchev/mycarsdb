@@ -10,6 +10,7 @@ import * as vehicleModels from '../../../models/vehicle.models';
 })
 export class UserVehiclesComponent implements OnInit {
 @Input() vehicles:vehicleModels.VehicleViewModel[];
+@Input() vehicleFilter:String
   constructor() { }
 
   ngOnInit() {

@@ -1,3 +1,5 @@
-<p>
-  This is home page of system myCarsDb
-</p>
+ <div class="input-group-btn search-panel">
+        <span class="input-group-addon">Search: </span>
+        <input type="text" class="form-control" placeholder="Start typing the exact model you are looking for..." [(ngModel)]='vehicleFilter' />
+    </div>
+<user-vehicles [vehicles]="vehicles"  [vehicleFilter]="vehicleFilter"></user-vehicles>

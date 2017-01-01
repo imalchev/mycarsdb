@@ -19,6 +19,7 @@ import { HomeComponent }      from './ui/pages/home/home.component';
 import { GarageComponent }    from './ui/pages/garage/garage.component';
 import { UserVehiclesComponent } from './ui/vehicle/userVehiclesList/user-vehicles.component';
 import { VehicleDetailsComponent } from './ui/vehicle/vehicle-details/vehicle-details.component';
+import { FilterVehiclePipe } from './ui/shared/pipes/filter-vehicle.pipe';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { VehicleDetailsComponent } from './ui/vehicle/vehicle-details/vehicle-de
     HomeComponent,
     GarageComponent,
     UserVehiclesComponent,
-    VehicleDetailsComponent
+    VehicleDetailsComponent,
+    FilterVehiclePipe
   ],
   imports: [
     BrowserModule,

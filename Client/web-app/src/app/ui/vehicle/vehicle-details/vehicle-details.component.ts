@@ -38,5 +38,7 @@ get engineCapacity(): number {
      return this.vehicle.fuelTypesStr.join();
    }
 
-
+   get exactModel():string{
+     return this.vehicle.exactModel;
+   }
 }

@@ -7,5 +7,5 @@
               </tr>
            </thead>
            <tbody>
-        <tr app-vehicle-details [vehicle]="vehicle" *ngFor="let vehicle of vehicles" ></tr>
+        <tr app-vehicle-details [vehicle]="vehicle" *ngFor="let vehicle of vehicles | filterVehicle:vehicleFilter" ></tr>
    </tbody></table>

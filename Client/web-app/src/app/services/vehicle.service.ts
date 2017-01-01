@@ -48,6 +48,11 @@ export class VehicleService extends BaseHttpService{
           .map((response: Response) => <vehicleModels.VehicleViewModel[]>response.json())            
     }
 
+    getAllVehicles():Observable<vehicleModels.VehicleViewModel[]>{
+         return this._http.get(`${constants.BASE_API_URI}/vehicles/getAllVehicles`)
+          .map((response: Response) => <vehicleModels.VehicleViewModel[]>response.json())            
+    }
+
     getVehicleTypes(): Observable<vehicleModels.VehicleTypeModel[] | string> {
         let url = `${constants.BASE_API_URI}/vehicles/getVehicleTypes`;
         return this._http.get(url)
