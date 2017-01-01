@@ -158,6 +158,7 @@
     <Compile Include="DataTransferModels\VehicleModel.cs" />
     <Compile Include="DataTransferModels\VehicleModelModel.cs" />
     <Compile Include="DataTransferModels\VehicleTypeModel.cs" />
+    <Compile Include="DataTransferModels\VehicleViewModel.cs" />
     <Compile Include="Infrastructure\Formatters\BrowserJsonFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

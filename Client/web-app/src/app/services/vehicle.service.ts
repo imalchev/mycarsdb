@@ -38,6 +38,16 @@ export class VehicleService extends BaseHttpService{
             .catch(this._handleError);
     }
 
+    getUserVehicles():Observable<vehicleModels.VehicleViewModel[]>{
+
+          let authToken = this._authService.getToken();
+        let headers = this._getJsonHeaders();
+        this._authService.setAuthorizationHeader(headers);
+        let options = new RequestOptions({headers: headers});
+         return this._http.get(`${constants.BASE_API_URI}/vehicles/getUserVehicles`,options)
+          .map((response: Response) => <vehicleModels.VehicleViewModel[]>response.json())            
+    }
+
     getVehicleTypes(): Observable<vehicleModels.VehicleTypeModel[] | string> {
         let url = `${constants.BASE_API_URI}/vehicles/getVehicleTypes`;
         return this._http.get(url)

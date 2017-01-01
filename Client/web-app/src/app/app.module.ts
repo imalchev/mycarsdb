@@ -17,6 +17,8 @@ import { SidebarComponent }   from './ui/shared';
 import { AppRoutingModule }   from './app-routing.module';
 import { HomeComponent }      from './ui/pages/home/home.component';
 import { GarageComponent }    from './ui/pages/garage/garage.component';
+import { UserVehiclesComponent } from './ui/vehicle/userVehiclesList/user-vehicles.component';
+import { VehicleDetailsComponent } from './ui/vehicle/vehicle-details/vehicle-details.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { GarageComponent }    from './ui/pages/garage/garage.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    GarageComponent
+    GarageComponent,
+    UserVehiclesComponent,
+    VehicleDetailsComponent
   ],
   imports: [
     BrowserModule,

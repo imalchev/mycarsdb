@@ -1,6 +1,6 @@
 ﻿namespace MyCarsDb.Server.WebApi.Controllers
 {
-    using System;    
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Linq;
@@ -11,6 +11,7 @@
     using MyCarsDb.Server.WebApi.Auth;
     using MyCarsDb.Server.WebApi.Controllers.Base;
     using MyCarsDb.Server.WebApi.DataTransferModels;
+    using System.Data.Entity;
 
     [AllowAnonymous]
     public class VehiclesController : BaseController
@@ -64,6 +65,35 @@
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<List<VehicleViewModel>> GetUserVehicles()
+        {
+            var userEmail = this.User.Identity.Name;
+            var user = await this.UserManager.FindByEmailAsync(userEmail);
+            var userVehicles = DbContext.UsersToVehicles.Include(x=>x.Vehicle).Where(x => x.UserId == user.Id)
+                .Select
+                (x => new VehicleViewModel()
+                {
+                    ModelName = x.Vehicle.Model.ModelName,
+                    MakeName = x.Vehicle.Model.Make.Name,
+                    EngineCapacity = x.Vehicle.EngineCapacity,
+                    ExactModel = x.Vehicle.ExactModel,
+                    FuelType = (short)x.Vehicle.FuelTypes,
+                    ManufactureDate=x.Vehicle.ManufactureDate,
+                    Power = x.Vehicle.Power,
+                    RegNumber = x.Vehicle.RegNumber,
+                    Type = x.Vehicle.Type
+                } )
+                .ToList();
+
+            foreach (var vehicle in userVehicles)
+            {
+                vehicle.FuelTypesStr = ConvertFuelTypes(vehicle.FuelType);
+            }
+
+            return userVehicles;
+        }
+
         private FuelType CalculateFuelTpes(IEnumerable<FuelType> fuelTypes)
         {
             FuelType result = (FuelType)0;
@@ -73,6 +103,21 @@
             }
 
             return result;
+        }
+
+        private List<string> ConvertFuelTypes (short fueltypes)
+        {
+            var enumList = Enum.GetValues(typeof(FuelType)).OfType<FuelType>().ToList();
+            var fuelTypesStr = new List<string>();
+            foreach (var item in enumList)
+            {
+                if((fueltypes & (short)item)>0)
+                {
+                    fuelTypesStr.Add(Enum.GetName(typeof(FuelType), item));
+                }
+            }
+
+            return fuelTypesStr;
         }
 
         [HttpGet]

@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import * as vehicleModels from '../../models/vehicle.models';
 import { FuelModel } from '../../models/fuel.model';
 import { VehicleService } from '../../services/vehicle.service';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-vehicle',
@@ -13,6 +14,10 @@ import { VehicleService } from '../../services/vehicle.service';
   providers: [VehicleService]
 })
 export class VehicleComponent implements OnInit {
+
+  constructor(public _vehicleService: VehicleService, private router: Router) {
+  }
+
     isCalendarShown = false;
 
     availableVehicleTypes: vehicleModels.VehicleTypeModel[] = null;
@@ -60,12 +65,9 @@ export class VehicleComponent implements OnInit {
             event.formatted, ' - epoc timestamp: ', event.epoc);
     }
 
-  constructor(public _vehicleService: VehicleService) {
-  }
-
   addVehicle(vehicleForm: NgForm): void {
       this._vehicleService.addVehicle(this.model)
-          .subscribe(data => ''); // TODO redirect to garage
+          .subscribe(data => this.router.navigate(['/garage']));
   }
 
   onSelect(makeId) {

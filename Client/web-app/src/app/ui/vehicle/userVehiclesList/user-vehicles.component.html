@@ -1,0 +1,11 @@
+  <table class="table table-striped" >
+           <thead>
+              <tr>
+                   <th>Car Model</th>
+                   <th>Information</th>
+                  <th>Manufacture Year</th>            
+              </tr>
+           </thead>
+           <tbody>
+        <tr app-vehicle-details [vehicle]="vehicle" *ngFor="let vehicle of vehicles" ></tr>
+   </tbody></table>

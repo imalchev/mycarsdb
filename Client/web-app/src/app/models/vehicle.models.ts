@@ -9,6 +9,12 @@ export interface VehicleModel {
    modelId: number;
 }
 
+export interface VehicleViewModel extends VehicleModel{
+    modelName:string;
+    makeName:string;
+    fuelTypesStr:string[];  
+}
+
 export interface VehicleMakeModel {
     id: number;
     name: string;
