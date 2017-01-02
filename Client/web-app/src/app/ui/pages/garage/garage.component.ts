@@ -9,6 +9,7 @@ import * as vehicleModels from '../../../models/vehicle.models';
   styleUrls: ['./garage.component.css']
 })
 export class GarageComponent implements OnInit {
+  isGarage:boolean=true;
 vehicles:vehicleModels.VehicleViewModel[];
   constructor(private _vehicleService : VehicleService) { }
 
@@ -16,5 +17,4 @@ vehicles:vehicleModels.VehicleViewModel[];
     this._vehicleService.getUserVehicles()
     .subscribe(vehicles=>this.vehicles=vehicles)
   }
-
 }

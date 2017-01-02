@@ -1,7 +1,8 @@
 export interface VehicleModel {
+   vehicleId:number,
    power: number;
    exactModel: string;
-   manufactureDate: Date;
+   manufactureDate: string;
    engineCapacity: number;
    type: string;
    regNumber:string,
@@ -10,6 +11,7 @@ export interface VehicleModel {
 }
 
 export interface VehicleViewModel extends VehicleModel{
+    encodedId:string,
     modelName:string;
     makeName:string;
     fuelTypesStr:string[];  

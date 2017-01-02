@@ -1,14 +1,18 @@
 import { Component, OnInit,Input } from '@angular/core';
 import * as vehicleModels from '../../../models/vehicle.models';
+import {Router} from '@angular/router';
 
 @Component({
   selector: '[app-vehicle-details]',
   templateUrl: './vehicle-details.component.html',
   styleUrls: ['./vehicle-details.component.css']
 })
-export class VehicleDetailsComponent{
+export class VehicleDetailsComponent implements OnInit {
 @Input() vehicle:vehicleModels.VehicleViewModel
-  constructor() { }
+  constructor(private _router : Router)  {
+    
+   }
+  public location = '' ;
 get engineCapacity(): number {
         return this.vehicle.engineCapacity 
     }
@@ -40,5 +44,16 @@ get engineCapacity(): number {
 
    get exactModel():string{
      return this.vehicle.exactModel;
+   }
+
+   get encodedId():string{
+     return this.vehicle.encodedId
+   }
+
+   ngOnInit() {
+this.location = this._router.url;
+   }
+   onSelect(encodedId:string){
+      this._router.navigate(['/editVehicle', encodedId]);
    }
 }

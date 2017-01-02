@@ -38,6 +38,20 @@ export class VehicleService extends BaseHttpService{
             .catch(this._handleError);
     }
 
+    
+    editVehicle(vehicle: vehicleModels.VehicleModel): Observable<void | string>{
+        let body = JSON.stringify(vehicle);
+        let headers = this._getJsonHeaders();
+        this._authService.setAuthorizationHeader(headers);
+        let options = new RequestOptions({headers: headers});
+        return this._http.post(`${constants.BASE_API_URI}/vehicles/edit`, body,options)
+            // .map((response: Response) => {
+            //     let jsonData: any = response.json();
+            //     return jsonData;
+            //     })
+            .catch(this._handleError);
+    }
+
     getUserVehicles():Observable<vehicleModels.VehicleViewModel[]>{
 
           let authToken = this._authService.getToken();
@@ -46,6 +60,11 @@ export class VehicleService extends BaseHttpService{
         let options = new RequestOptions({headers: headers});
          return this._http.get(`${constants.BASE_API_URI}/vehicles/getUserVehicles`,options)
           .map((response: Response) => <vehicleModels.VehicleViewModel[]>response.json())            
+    }
+
+    getVehicleById(id):Observable<vehicleModels.VehicleModel>{
+        return this._http.get(`${constants.BASE_API_URI}/vehicles/getVehicleById?id=${id}`)
+          .map((response: Response) => <vehicleModels.VehicleModel>response.json())  
     }
 
     getAllVehicles():Observable<vehicleModels.VehicleViewModel[]>{

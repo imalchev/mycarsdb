@@ -12,3 +12,6 @@
 <td>
     {{manufatureDate}}
 </td>
+<td *ngIf="location=='/garage'">
+  <span class="glyphicon glyphicon-pencil" role="button" (click)="onSelect(encodedId)" ></span>
+</td>

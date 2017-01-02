@@ -6,6 +6,7 @@ import * as vehicleModels from '../../models/vehicle.models';
 import { FuelModel } from '../../models/fuel.model';
 import { VehicleService } from '../../services/vehicle.service';
 import {Router} from '@angular/router'
+import { ActivatedRoute,Params } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle',
@@ -15,10 +16,11 @@ import {Router} from '@angular/router'
 })
 export class VehicleComponent implements OnInit {
 
-  constructor(public _vehicleService: VehicleService, private router: Router) {
+  constructor(public _vehicleService: VehicleService, private router: Router, private activatedRoute:ActivatedRoute) {
   }
 
-    isCalendarShown = false;
+    pageTitle = "Add Vehicle";
+    vehicleExists:boolean = false;
 
     availableVehicleTypes: vehicleModels.VehicleTypeModel[] = null;
     availabaleFuelTypes: FuelModel[] = null;
@@ -26,7 +28,8 @@ export class VehicleComponent implements OnInit {
     availableVehicleModels: vehicleModels.VehicleModelModel[] = null;
 
     model: vehicleModels.VehicleModel = {
-      manufactureDate: new Date(),
+      vehicleId:null,
+      manufactureDate: "",
       power: null,
       exactModel: null,
       type: null,
@@ -37,28 +40,29 @@ export class VehicleComponent implements OnInit {
     };
 
     get manufactureDate() {
-        return {
-            day: this.model.manufactureDate.getDay(),
-            month: this.model.manufactureDate.getMonth() + 1,
-            year: this.model.manufactureDate.getFullYear()
-        };
+        
+         return this.model.manufactureDate
+     
+        
     };
+
 
     myDatePickerOptions = {
       showTodayBtn: false,
       dateFormat: 'yyyy-mm',
       firstDayOfWeek: 'mo',
       sunHighlight: false,
-      customPlaceholderTxt: 'manufacture date',
+      customPlaceholderTxt: 'Manufacture date',
       // height: '40px',
       width: '200px',
       inline: false,
-      selectionTxtFontSize: '16px'
+      selectionTxtFontSize: '16px',
+    showClearDateBtn: false,
     };
 
     onDateChanged(event: any) {
         // TO DO: set first day of month
-        this.model.manufactureDate = new Date(event.date.year, event.date.month - 1, event.date.day);
+        this.model.manufactureDate = event.formatted;
 
         console.log('onDateChanged(): ', event.date, ' - jsdate: ',
             new Date(event.jsdate).toLocaleDateString(), ' - formatted: ',
@@ -66,8 +70,14 @@ export class VehicleComponent implements OnInit {
     }
 
   addVehicle(vehicleForm: NgForm): void {
+      if(!this.vehicleExists){
       this._vehicleService.addVehicle(this.model)
           .subscribe(data => this.router.navigate(['/garage']));
+      }
+      else{
+          this._vehicleService.editVehicle(this.model)
+          .subscribe(data => this.router.navigate(['/garage']));
+      }
   }
 
   onSelect(makeId) {
@@ -77,6 +87,15 @@ export class VehicleComponent implements OnInit {
 
 
   ngOnInit() {
+      let id;
+      this.activatedRoute.params.subscribe((params:Params)=>id = params['id']);
+      if(id){
+          this._vehicleService.getVehicleById(id)
+          .subscribe(types => {this.model=types, this.onSelect(types.makeId)});
+          this.pageTitle = "Edit Vehicle"
+          this.vehicleExists = true;
+          
+      }
       this._vehicleService.getVehicleTypes()
           .subscribe((types: vehicleModels.VehicleTypeModel[]) => this.availableVehicleTypes = types);
 
@@ -86,6 +105,7 @@ export class VehicleComponent implements OnInit {
       this._vehicleService.getMakes()
           .subscribe( types => this.availableVehicleMakes = types);
   }
+
 }
 
 

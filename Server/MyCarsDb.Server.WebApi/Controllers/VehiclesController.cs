@@ -13,6 +13,7 @@
     using MyCarsDb.Server.WebApi.DataTransferModels;
     using System.Data.Entity;
     using System.Linq.Expressions;
+    using Common;
 
     [AllowAnonymous]
     public class VehiclesController : BaseController
@@ -66,6 +67,49 @@
             return Ok();
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IHttpActionResult> Edit(DataTransferModels.VehicleModel model)
+        {
+            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == model.VehicleId).FirstOrDefaultAsync();
+
+            vehicle.EngineCapacity = model.EngineCapacity;
+            vehicle.ExactModel = model.ExactModel;
+            vehicle.FuelTypes = CalculateFuelTpes(model.FuelTypes);
+            vehicle.ManufactureDate = model.ManufactureDate;
+            vehicle.ModelId = model.ModelId;
+            vehicle.Power = model.Power;
+            vehicle.RegNumber = model.RegNumber;
+            vehicle.Type = model.Type;
+
+            await this.DbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        public async Task<DataTransferModels.VehicleModel> GetVehicleById(string id)
+        {
+            var vehicleId = Helper.DecodeId(id);
+
+            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == vehicleId).FirstOrDefaultAsync();
+
+            var model = new DataTransferModels.VehicleModel()
+            { 
+                VehicleId = vehicle.Id,
+                ManufactureDate = vehicle.ManufactureDate,
+                EngineCapacity = vehicle.EngineCapacity,
+                Power = vehicle.Power,
+                ExactModel = vehicle.ExactModel,
+                RegNumber = vehicle.RegNumber,
+                ModelId = vehicle.ModelId,
+                Type = vehicle.Type,   
+                MakeId = vehicle.Model.MakeId                   
+            };
+
+            model.FuelTypes = GetFuelTypeList(vehicle.FuelTypes);
+            return model;
+
+        }
+
         [HttpGet]
         public async Task<List<VehicleViewModel>> GetUserVehicles()
         {
@@ -75,6 +119,7 @@
                 .Select
                 (x => new VehicleViewModel()
                 {
+                    VehicleId = x.VehicleId,
                     ModelName = x.Vehicle.Model.ModelName,
                     MakeName = x.Vehicle.Model.Make.Name,
                     EngineCapacity = x.Vehicle.EngineCapacity,
@@ -103,6 +148,7 @@
                 .Select
                 (x => new VehicleViewModel()
                 {
+                    VehicleId = x.VehicleId,
                     ModelName = x.Vehicle.Model.ModelName,
                     MakeName = x.Vehicle.Model.Make.Name,
                     EngineCapacity = x.Vehicle.EngineCapacity,
@@ -111,7 +157,9 @@
                     ManufactureDate = x.Vehicle.ManufactureDate,
                     Power = x.Vehicle.Power,
                     RegNumber = x.Vehicle.RegNumber,
-                    Type = x.Vehicle.Type
+                    Type = x.Vehicle.Type,
+                   
+                   
                 })
                 .ToListAsync();
 
@@ -147,6 +195,21 @@
             }
 
             return fuelTypesStr;
+        }
+
+        private List<FuelType> GetFuelTypeList(FuelType fuelType)
+        {
+            var enumList = Enum.GetValues(typeof(FuelType)).OfType<FuelType>().ToList();
+            var fuelTypes = new List<FuelType>();
+            foreach (var type in enumList)
+            {
+                if (((short)fuelType & (short)type)>0)
+                {
+                    fuelTypes.Add(type);
+                }
+            }
+
+            return fuelTypes;
         }
 
         [HttpGet]

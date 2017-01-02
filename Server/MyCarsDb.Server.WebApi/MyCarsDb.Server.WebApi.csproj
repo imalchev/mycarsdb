@@ -142,6 +142,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Helper.cs" />
     <Compile Include="Config\AuthConfig.cs" />
     <Compile Include="Auth\ClaimsIdentityFactory.cs" />
     <Compile Include="Auth\MyCarsDbOAuthBearerAuthenticationProvider.cs" />

@@ -15,7 +15,10 @@ const routes: Routes = [
         { path: 'login', component: LoginComponent },
         { path: 'register', component: RegisterComponent },
         { path: 'garage', component: GarageComponent, canActivate: [ AuthGuard ] },
-        { path: 'vehicle', component: VehicleComponent, canActivate: [ AuthGuard ] } ] },
+        { path: 'vehicle', component: VehicleComponent, canActivate: [ AuthGuard ] },
+        { path: 'editVehicle/:id', component: VehicleComponent, canActivate: [ AuthGuard ] },
+         ] },
+        
     { path: '**', redirectTo: '' }
 ];
 

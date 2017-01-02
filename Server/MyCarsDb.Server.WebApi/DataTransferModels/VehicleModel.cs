@@ -5,10 +5,15 @@
     using System.Collections.Generic;
 
     using MyCarsDb.Data.Models.Enums;
+    using Newtonsoft.Json;
 
     public class VehicleModel
     {
+        public int VehicleId { get; set; }
+
         public int ModelId { get; set; }
+  
+        public int MakeId { get; set; }
 
         [MaxLength(50)]
         public string ExactModel { get; set; }
