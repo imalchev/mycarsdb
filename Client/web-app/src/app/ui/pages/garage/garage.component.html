@@ -3,4 +3,6 @@
       Add vehicle&nbsp;<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
   </button>
 </div>
-<user-vehicles [vehicles]="vehicles"></user-vehicles>
+<div [@transition]='state'>
+<user-vehicles  [vehicles]="vehicles"></user-vehicles>
+</div>
