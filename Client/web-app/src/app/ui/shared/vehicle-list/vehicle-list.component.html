@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Car Model</th>
+      <th>Information</th>
+      <th>Manufacture Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vehicle of vehicles | filterVehicle:vehicleFilter">
+      <td>
+        {{vehicle.makeName}} {{vehicle.modelName}} {{vehicle.exactModel}}
+      </td>
+      <td>
+        {{vehicle.power}} {{vehicle.engineCapacity}} cm
+        <sup>3</sup> {{vehicle.fuelTypesStr}}
+      </td>
+      <td>
+        {{vehicle.manufactureDate | date:"MM/yyyy"}}
+      </td>
+      <td *ngIf="location=='/garage'">
+        <span class="glyphicon glyphicon-pencil" role="button" (click)="onSelect(vehicle.encodedId)"></span>
+      </td>
+    </tr>
+  </tbody>
+</table>

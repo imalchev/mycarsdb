@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import {UserVehiclesComponent} from '../../vehicle/userVehiclesList/user-vehicles.component'
-import {VehicleService} from '../../../services/vehicle.service'
+import {UserVehiclesComponent} from '../../vehicle/userVehiclesList/user-vehicles.component';
+import {VehicleService} from '../../../services/vehicle.service';
 import * as vehicleModels from '../../../models/vehicle.models';
 
 @Component({
@@ -10,13 +10,13 @@ import * as vehicleModels from '../../../models/vehicle.models';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-vehicles:vehicleModels.VehicleViewModel[];
- vehicleFilter:string;
-  constructor(private _vehicleService : VehicleService) { }
+vehicles: vehicleModels.VehicleViewModel[];
+ vehicleFilter: string;
+  constructor(private _vehicleService: VehicleService) { }
 
-  ngOnInit() {
+ngOnInit() {
     this._vehicleService.getAllVehicles()
-    .subscribe(vehicles=>this.vehicles=vehicles)
+    .subscribe((vehicles: vehicleModels.VehicleViewModel[]) => this.vehicles = vehicles);
   }
 
 }
