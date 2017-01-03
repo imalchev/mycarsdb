@@ -5,22 +5,19 @@ import { Http } from '@angular/http';
 import * as vehicleModels from '../../models/vehicle.models';
 import { FuelModel } from '../../models/fuel.model';
 import { VehicleService } from '../../services/vehicle.service';
-import {Router} from '@angular/router'
-import { ActivatedRoute,Params } from '@angular/router';
+import { Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
-  selector: 'app-vehicle',
-  templateUrl: './vehicle.component.html',
-  styleUrls: ['./vehicle.component.css'],
-  providers: [VehicleService]
+    selector: 'app-vehicle',
+    templateUrl: './vehicle.component.html',
+    styleUrls: ['./vehicle.component.css'],
+    providers: [VehicleService]
 })
 export class VehicleComponent implements OnInit {
-
-  constructor(public _vehicleService: VehicleService, private router: Router, private activatedRoute:ActivatedRoute) {
-  }
-
-    pageTitle = "Add Vehicle";
-    vehicleExists:boolean = false;
+    pageTitle = 'Add Vehicle';
+    vehicleExists: boolean = false;
+    errorMessage: string;
 
     availableVehicleTypes: vehicleModels.VehicleTypeModel[] = null;
     availabaleFuelTypes: FuelModel[] = null;
@@ -28,37 +25,36 @@ export class VehicleComponent implements OnInit {
     availableVehicleModels: vehicleModels.VehicleModelModel[] = null;
 
     model: vehicleModels.VehicleModel = {
-      vehicleId:null,
-      manufactureDate: "",
-      power: null,
-      exactModel: null,
-      type: null,
-      engineCapacity: null,
-      regNumber: null,
-      makeId: null,
-      modelId: null
+        vehicleId: null,
+        manufactureDate: '',
+        power: null,
+        exactModel: null,
+        type: null,
+        engineCapacity: null,
+        regNumber: null,
+        makeId: null,
+        modelId: null
     };
-
-    get manufactureDate() {
-        
-         return this.model.manufactureDate
-     
-        
-    };
-
 
     myDatePickerOptions = {
-      showTodayBtn: false,
-      dateFormat: 'yyyy-mm',
-      firstDayOfWeek: 'mo',
-      sunHighlight: false,
-      customPlaceholderTxt: 'Manufacture date',
-      // height: '40px',
-      width: '200px',
-      inline: false,
-      selectionTxtFontSize: '16px',
-    showClearDateBtn: false,
+        showTodayBtn: false,
+        dateFormat: 'yyyy-mm',
+        firstDayOfWeek: 'mo',
+        sunHighlight: false,
+        customPlaceholderTxt: 'Manufacture date',
+        // height: '40px',
+        width: '200px',
+        inline: false,
+        selectionTxtFontSize: '16px',
+        showClearDateBtn: false,
     };
+    constructor(public _vehicleService: VehicleService, private router: Router, private activatedRoute: ActivatedRoute) {
+    }
+
+    get manufactureDate() {
+        return this.model.manufactureDate;
+    };
+
 
     onDateChanged(event: any) {
         // TO DO: set first day of month
@@ -69,43 +65,50 @@ export class VehicleComponent implements OnInit {
             event.formatted, ' - epoc timestamp: ', event.epoc);
     }
 
-  addVehicle(vehicleForm: NgForm): void {
-      if(!this.vehicleExists){
-      this._vehicleService.addVehicle(this.model)
-          .subscribe(data => this.router.navigate(['/garage']));
-      }
-      else{
-          this._vehicleService.editVehicle(this.model)
-          .subscribe(data => this.router.navigate(['/garage']));
-      }
-  }
+    addVehicle(vehicleForm: NgForm): void {
+        if (!this.vehicleExists) {
+            this._vehicleService.addVehicle(this.model)
+                .subscribe(data => this.router.navigate(['/garage']),
+                (response: string) => this.errorMessage = response);
+        } else {
+            this._vehicleService.editVehicle(this.model)
+                .subscribe(data => this.router.navigate(['/garage']));
+        }
+    }
 
-  onSelect(makeId) {
-      this._vehicleService.getModels(makeId)
-          .subscribe(types => this.availableVehicleModels = types);
-  }
+    onSelect(makeId) {
+        this._vehicleService.getModels(makeId)
+            .subscribe((models: vehicleModels.VehicleModelModel[]) => this.availableVehicleModels = models,
+            (response: string) => this.handleResponse(response));
+    }
 
+    ngOnInit() {
+        let id;
+        this.activatedRoute.params.subscribe((params: Params) => id = params['id']);
+        if (id) {
+            this._vehicleService.getVehicleById(id)
+                .subscribe((types: vehicleModels.VehicleModel) => {this.model = types,this.onSelect(types.makeId) },
+                (response: string) => this.handleResponse(response));
+            this.pageTitle = 'Edit Vehicle';
+            this.vehicleExists = true;
+        }
 
-  ngOnInit() {
-      let id;
-      this.activatedRoute.params.subscribe((params:Params)=>id = params['id']);
-      if(id){
-          this._vehicleService.getVehicleById(id)
-          .subscribe(types => {this.model=types, this.onSelect(types.makeId)});
-          this.pageTitle = "Edit Vehicle"
-          this.vehicleExists = true;
-          
-      }
-      this._vehicleService.getVehicleTypes()
-          .subscribe((types: vehicleModels.VehicleTypeModel[]) => this.availableVehicleTypes = types);
+        this._vehicleService.getVehicleTypes()
+            .subscribe((types: vehicleModels.VehicleTypeModel[]) => this.availableVehicleTypes = types,
+            (response: string) => this.handleResponse(response));
 
-      this._vehicleService.getFuelTypes()
-          .subscribe(types => this.availabaleFuelTypes = types);
+        this._vehicleService.getFuelTypes()
+            .subscribe((types: FuelModel[]) => this.availabaleFuelTypes = types,
+            (response: string) => this.handleResponse(response));
 
-      this._vehicleService.getMakes()
-          .subscribe( types => this.availableVehicleMakes = types);
-  }
+        this._vehicleService.getMakes()
+            .subscribe((makes: vehicleModels.VehicleMakeModel[]) => this.availableVehicleMakes = makes,
+            (response: string) => this.handleResponse(response));
+    }
 
+    handleResponse(response: string): void {
+        this.errorMessage = response;
+    }
 }
 
 

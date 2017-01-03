@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { VehicleService } from '../../../services/vehicle.service';
 import { Http } from '@angular/http';
 import * as vehicleModels from '../../../models/vehicle.models';
@@ -9,8 +9,8 @@ import * as vehicleModels from '../../../models/vehicle.models';
   styleUrls: ['./user-vehicles.component.css']
 })
 export class UserVehiclesComponent implements OnInit {
-@Input() vehicles:vehicleModels.VehicleViewModel[];
-@Input() vehicleFilter:String
+@Input() vehicles: vehicleModels.VehicleViewModel[];
+@Input() vehicleFilter: string;
   constructor() { }
 
   ngOnInit() {

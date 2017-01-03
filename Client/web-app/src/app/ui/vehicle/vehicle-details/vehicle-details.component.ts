@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as vehicleModels from '../../../models/vehicle.models';
 import {Router} from '@angular/router';
 
@@ -8,13 +8,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./vehicle-details.component.css']
 })
 export class VehicleDetailsComponent implements OnInit {
-@Input() vehicle:vehicleModels.VehicleViewModel
-  constructor(private _router : Router)  {
-    
+  private location = '';
+  @Input() vehicle: vehicleModels.VehicleViewModel;
+  constructor(private _router: Router)  {  
    }
-  public location = '' ;
-get engineCapacity(): number {
-        return this.vehicle.engineCapacity 
+ 
+    get engineCapacity(): number {
+        return this.vehicle.engineCapacity; 
     }
 
     get type(): string {
@@ -22,38 +22,40 @@ get engineCapacity(): number {
     }
 
     get manufatureDate(): string {
-      var date = new Date(this.vehicle.manufactureDate);
-     var month = ((date.getMonth()+1)>=10)? (date.getMonth()+1) : '0' + (date.getMonth()+1); 
-        return month + '/'+ date.getFullYear();
+      let date = new Date(this.vehicle.manufactureDate);
+      let month = ((date.getMonth() + 1) >= 10) ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1); 
+      return month + '/' + date.getFullYear();
     }
 
     get power(): string {
-        return this.vehicle.power +" kw, ";
+        return this.vehicle.power + ' kw,';
     }
-    get modelName():string{
-      return this.vehicle.modelName
+
+    get modelName(): string{
+      return this.vehicle.modelName;
    }
 
-   get makeName():string{
-     return this.vehicle.makeName
+   get makeName(): string{
+     return this.vehicle.makeName;
    }
 
-   get fuelTypes():string{
+   get fuelTypes(): string{
      return this.vehicle.fuelTypesStr.join();
    }
 
-   get exactModel():string{
+   get exactModel(): string{
      return this.vehicle.exactModel;
    }
 
-   get encodedId():string{
-     return this.vehicle.encodedId
+   get encodedId(): string{
+     return this.vehicle.encodedId;
    }
 
    ngOnInit() {
-this.location = this._router.url;
+   this.location = this._router.url;
    }
-   onSelect(encodedId:string){
+
+   onSelect(encodedId: string) {
       this._router.navigate(['/editVehicle', encodedId]);
    }
 }

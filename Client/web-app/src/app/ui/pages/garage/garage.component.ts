@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {UserVehiclesComponent} from '../../vehicle/userVehiclesList/user-vehicles.component'
-import {VehicleService} from '../../../services/vehicle.service'
+import {UserVehiclesComponent} from '../../vehicle/userVehiclesList/user-vehicles.component';
+import {VehicleService} from '../../../services/vehicle.service';
 import * as vehicleModels from '../../../models/vehicle.models';
-import { slideInDownAnimation } from '../../shared/animations'
+import { slideInDownAnimation } from '../../shared/animations';
 
 
 @Component({
@@ -12,14 +12,14 @@ import { slideInDownAnimation } from '../../shared/animations'
    animations: [ slideInDownAnimation ]
 })
 export class GarageComponent implements OnInit {
-  isGarage:boolean=true;
-  state:string ='in'
-vehicles:vehicleModels.VehicleViewModel[];
-  constructor(private _vehicleService : VehicleService) { }
+  isGarage: boolean = true;
+  state: string = 'in';
+vehicles: vehicleModels.VehicleViewModel[];
+  constructor(private _vehicleService: VehicleService) { }
 
   ngOnInit() {
     this._vehicleService.getUserVehicles()
-    .subscribe(vehicles=>this.vehicles=vehicles)
-    this.state=(this.state==='in'?'out':'in')
+    .subscribe((vehicles: vehicleModels.VehicleViewModel[]) => this.vehicles = vehicles);
+    this.state = (this.state === 'in' ? 'out' : 'in');
   }
 }

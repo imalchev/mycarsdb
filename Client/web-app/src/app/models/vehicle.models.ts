@@ -1,20 +1,20 @@
 export interface VehicleModel {
-   vehicleId:number,
+   vehicleId: number;
    power: number;
    exactModel: string;
    manufactureDate: string;
    engineCapacity: number;
    type: string;
-   regNumber:string,
+   regNumber: string;
    makeId: number;
    modelId: number;
 }
 
-export interface VehicleViewModel extends VehicleModel{
-    encodedId:string,
-    modelName:string;
-    makeName:string;
-    fuelTypesStr:string[];  
+export interface VehicleViewModel extends VehicleModel {
+    encodedId: string;
+    modelName: string;
+    makeName: string;
+    fuelTypesStr: string[];  
 }
 
 export interface VehicleMakeModel {

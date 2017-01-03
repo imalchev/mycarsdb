@@ -22,6 +22,7 @@ import { VehicleDetailsComponent } from './ui/vehicle/vehicle-details/vehicle-de
 import { FilterVehiclePipe } from './ui/shared/pipes/filter-vehicle.pipe';
 import { FuelingComponent } from './ui/pages/fueling/fueling.component';
 import { DatepickerComponent } from './ui/shared/datepicker/datepicker.component';
+import { ErrorComponent } from './ui/shared/error/error.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { DatepickerComponent } from './ui/shared/datepicker/datepicker.component
     VehicleDetailsComponent,
     FilterVehiclePipe,
     FuelingComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

@@ -16,9 +16,9 @@ transform(value: vehicleModels.VehicleViewModel[], filterBy: string): vehicleMod
             ||
             (vehicle.exactModel.toLocaleLowerCase().indexOf(filterBy) !== -1)
             ||
-            ((vehicle.makeName+' '+vehicle.modelName+' '+vehicle.exactModel)
+            ((vehicle.makeName + ' ' + vehicle.modelName + ' ' + vehicle.exactModel)
             .toLocaleLowerCase().indexOf(filterBy) !== -1)
              )
-              : value 
+              : value; 
 }
 }
