@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <h3>Fueling</h3>
+  <div class="col-lg-6 col-md-6">  
+      <form #fuelingForm="ngForm" (submit)="saveFueling(model)" novalidate>
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-4">
+            <app-datepicker [(selectedDate)]="model.date"></app-datepicker>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-4">
+            <input name="odometer" type="number" maxlength="7" [(ngModel)]="model.odometer" placeholder="odometer" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-4">
+            <select name="fuelType" [(ngModel)]="model.fuelType">
+              <option value="1">Gasoline</option>
+              <option value="2">Diesel</option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-4">            
+            <input id="seriesBegingin" name="seriesBegingin" type="checkbox" [(ngModel)]="model.isSeriesBegining" />
+            <label for="seriesBegingin">Is series begining</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-4">
+             <input name="quantity" type="number" maxlength="7" [(ngModel)]="model.quantity" placeholder="quantity" />
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-4">
+            <input id="isFull" name="isFull" type="checkbox" [(ngModel)]="model.isFull" />
+            <label for="isFull">Is full</label>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-4">
+            <input id="isEmpty" name="isEmpty" type="checkbox" [(ngModel)]="model.isEmpty" />
+            <label for="isEmpty">Is empty</label>
+          </div>
+        </div>
+        <div class="row">
+
+          <button type="submit" class="btn btn-default" [disabled]="!fuelingForm.form.valid">
+            Save&nbsp;<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+      {{model | json}}
+    </div>
+</div>
