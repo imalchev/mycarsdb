@@ -111,6 +111,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<List<VehicleViewModel>> GetUserVehicles()
         {
             var userEmail = this.User.Identity.Name;

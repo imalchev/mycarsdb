@@ -7,6 +7,7 @@ import { VehicleComponent }     from './ui/vehicle/vehicle.component';
 import { DashboardComponent }   from './ui/layout/dashboard/dashboard.component';
 import { HomeComponent }        from './ui/pages/home/home.component';
 import { GarageComponent }      from './ui/pages/garage/garage.component';
+import { FuelingComponent }     from './ui/pages/fueling/fueling.component';
 import { AuthGuard }            from './common/auth.guard';
 
 const routes: Routes = [
@@ -17,8 +18,9 @@ const routes: Routes = [
         { path: 'garage', component: GarageComponent, canActivate: [ AuthGuard ] },
         { path: 'vehicle', component: VehicleComponent, canActivate: [ AuthGuard ] },
         { path: 'editVehicle/:id', component: VehicleComponent, canActivate: [ AuthGuard ] },
+        { path: 'fueling/:vehicleId', component: FuelingComponent, canActivate: [ AuthGuard ] },
+        { path: 'fueling/:vehicleId/:fuelingId', component: FuelingComponent, canActivate: [ AuthGuard ] }
          ] },
-        
     { path: '**', redirectTo: '' }
 ];
 

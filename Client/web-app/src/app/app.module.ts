@@ -20,6 +20,8 @@ import { GarageComponent }    from './ui/pages/garage/garage.component';
 import { UserVehiclesComponent } from './ui/vehicle/userVehiclesList/user-vehicles.component';
 import { VehicleDetailsComponent } from './ui/vehicle/vehicle-details/vehicle-details.component';
 import { FilterVehiclePipe } from './ui/shared/pipes/filter-vehicle.pipe';
+import { FuelingComponent } from './ui/pages/fueling/fueling.component';
+import { DatepickerComponent } from './ui/shared/datepicker/datepicker.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { FilterVehiclePipe } from './ui/shared/pipes/filter-vehicle.pipe';
     GarageComponent,
     UserVehiclesComponent,
     VehicleDetailsComponent,
-    FilterVehiclePipe
+    FilterVehiclePipe,
+    FuelingComponent,
+    DatepickerComponent
   ],
   imports: [
     BrowserModule,
