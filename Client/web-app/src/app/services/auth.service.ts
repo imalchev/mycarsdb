@@ -177,7 +177,7 @@ export class AuthService extends BaseHttpService {
             if (errorResponse.status ===  httpStatusCodes.BAD_REQUEST) {
                 let rejectResponse: ErrorLoginResponseModel = errorResponse.json();
                 if (rejectResponse.error === 'invalid_grant') {
-                    return Observable.throw(rejectResponse);
+                    return Observable.throw(rejectResponse.error_description);
                 }
             }
 
