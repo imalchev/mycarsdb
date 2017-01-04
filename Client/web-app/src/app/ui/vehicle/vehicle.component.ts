@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Http } from '@angular/http';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import * as vehicleModels from '../../models/vehicle.models';
 import { FuelModel } from '../../models/fuel.model';
 import { VehicleService } from '../../services/vehicle.service';
-import { Router } from '@angular/router';
-import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'app-vehicle',
     templateUrl: './vehicle.component.html',
     styleUrls: ['./vehicle.component.css'],
-    providers: [VehicleService]
+    providers: [ VehicleService ]
 })
 export class VehicleComponent implements OnInit {
     pageTitle = 'Add Vehicle';
@@ -26,7 +25,7 @@ export class VehicleComponent implements OnInit {
 
     model: vehicleModels.VehicleModel = {
         vehicleId: null,
-        manufactureDate: '',
+        manufactureDate: null,
         power: null,
         exactModel: null,
         type: null,
@@ -48,13 +47,13 @@ export class VehicleComponent implements OnInit {
         selectionTxtFontSize: '16px',
         showClearDateBtn: false,
     };
+
     constructor(public _vehicleService: VehicleService, private router: Router, private activatedRoute: ActivatedRoute) {
     }
 
     get manufactureDate() {
         return this.model.manufactureDate;
     };
-
 
     onDateChanged(event: any) {
         // TO DO: set first day of month
@@ -65,7 +64,7 @@ export class VehicleComponent implements OnInit {
             event.formatted, ' - epoc timestamp: ', event.epoc);
     }
 
-    addVehicle(vehicleForm: NgForm): void {
+    save(vehicleForm: vehicleModels.VehicleModel): void {
         if (!this.vehicleExists) {
             this._vehicleService.addVehicle(this.model)
                 .subscribe(data => this.router.navigate(['/garage']),
@@ -76,10 +75,10 @@ export class VehicleComponent implements OnInit {
         }
     }
 
-    onSelect(makeId) {
+    onMakeSelect(makeId) {
         this._vehicleService.getModels(makeId)
             .subscribe((models: vehicleModels.VehicleModelModel[]) => this.availableVehicleModels = models,
-            (response: string) => this.handleResponse(response));
+                (response: string) => this.handleResponse(response));
     }
 
     ngOnInit() {
@@ -87,8 +86,11 @@ export class VehicleComponent implements OnInit {
         this.activatedRoute.params.subscribe((params: Params) => id = params['id']);
         if (id) {
             this._vehicleService.getVehicleById(id)
-                .subscribe((types: vehicleModels.VehicleModel) => {this.model = types,this.onSelect(types.makeId) },
-                (response: string) => this.handleResponse(response));
+                .subscribe((vehicle: vehicleModels.VehicleModel) => { 
+                    this.model = vehicle;
+                    this.onMakeSelect(vehicle.makeId); 
+                }, 
+                    (response: string) => this.handleResponse(response));
             this.pageTitle = 'Edit Vehicle';
             this.vehicleExists = true;
         }
@@ -110,5 +112,3 @@ export class VehicleComponent implements OnInit {
         this.errorMessage = response;
     }
 }
-
-
