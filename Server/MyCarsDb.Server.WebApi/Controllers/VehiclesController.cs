@@ -2,18 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Threading.Tasks;
     using System.Linq;
     using System.Web.Http;
 
     using MyCarsDb.Data.Models;
     using MyCarsDb.Data.Models.Enums;
-    using MyCarsDb.Server.WebApi.Auth;
     using MyCarsDb.Server.WebApi.Controllers.Base;
+    using MyCarsDb.Server.WebApi.Common;
     using MyCarsDb.Server.WebApi.DataTransferModels;
-    using System.Data.Entity;
-    using System.Linq.Expressions;
-    using Common;
 
     [AllowAnonymous]
     public class VehiclesController : BaseController
@@ -69,9 +67,9 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IHttpActionResult> Edit(DataTransferModels.VehicleModel model)
+        public async Task<IHttpActionResult> Edit(int vehicleId, DataTransferModels.VehicleModel model)
         {
-            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == model.VehicleId).FirstOrDefaultAsync();
+            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == vehicleId).FirstOrDefaultAsync();
 
             vehicle.EngineCapacity = model.EngineCapacity;
             vehicle.ExactModel = model.ExactModel;
@@ -93,8 +91,7 @@
             var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == vehicleId).FirstOrDefaultAsync();
 
             var model = new DataTransferModels.VehicleModel()
-            { 
-                VehicleId = vehicle.Id,
+            {
                 ManufactureDate = vehicle.ManufactureDate,
                 EngineCapacity = vehicle.EngineCapacity,
                 Power = vehicle.Power,
@@ -105,71 +102,56 @@
                 MakeId = vehicle.Model.MakeId                   
             };
 
-            model.FuelTypes = GetFuelTypeList(vehicle.FuelTypes);
+            model.FuelTypes = this.GetFuelTypeList(vehicle.FuelTypes);
             return model;
-
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<List<VehicleViewModel>> GetUserVehicles()
+        public async Task<IEnumerable<VehicleViewModel>> GetUserVehicles()
         {
             var userEmail = this.User.Identity.Name;
             var user = await this.UserManager.FindByEmailAsync(userEmail);
-            var userVehicles = DbContext.UsersToVehicles.Include(x => x.Vehicle).Where(x => x.UserId == user.Id)
-                .Select
-                (x => new VehicleViewModel()
-                {
-                    VehicleId = x.VehicleId,
-                    ModelName = x.Vehicle.Model.ModelName,
-                    MakeName = x.Vehicle.Model.Make.Name,
-                    EngineCapacity = x.Vehicle.EngineCapacity,
-                    ExactModel = x.Vehicle.ExactModel,
-                    FuelType = (short)x.Vehicle.FuelTypes,
-                    ManufactureDate = x.Vehicle.ManufactureDate,
-                    Power = x.Vehicle.Power,
-                    RegNumber = x.Vehicle.RegNumber,
-                    Type = x.Vehicle.Type
-                })
-                .ToList();
 
-            foreach (var vehicle in userVehicles)
-            {
-                vehicle.FuelTypesStr = ConvertFuelTypes(vehicle.FuelType);
-            }
+            var userVehicles = await this.DbContext.UsersToVehicles.Include(x => x.Vehicle.Model.Make)
+                .Where(x => x.UserId == user.Id)
+                .Select(x => x.Vehicle)
+                .ToListAsync();
 
-            return userVehicles;
+            return this.ConvertFromVehicleToVehicleViewModel(userVehicles);
         }
 
         [HttpGet]
-        public async Task<List<VehicleViewModel>> GetAllVehicles()
+        public async Task<IEnumerable<VehicleViewModel>> GetAllVehicles()
         {
+            var vehicles = await this.DbContext.Vehicles.Include(x => x.Model.Make).Select(x => x).ToListAsync();
 
-            var vehicles = await DbContext.UsersToVehicles.Include(x => x.Vehicle)
-                .Select
-                (x => new VehicleViewModel()
-                {
-                    VehicleId = x.VehicleId,
-                    ModelName = x.Vehicle.Model.ModelName,
-                    MakeName = x.Vehicle.Model.Make.Name,
-                    EngineCapacity = x.Vehicle.EngineCapacity,
-                    ExactModel = x.Vehicle.ExactModel,
-                    FuelType = (short)x.Vehicle.FuelTypes,
-                    ManufactureDate = x.Vehicle.ManufactureDate,
-                    Power = x.Vehicle.Power,
-                    RegNumber = x.Vehicle.RegNumber,
-                    Type = x.Vehicle.Type,
-                   
-                   
-                })
-                .ToListAsync();
+            return this.ConvertFromVehicleToVehicleViewModel(vehicles);
+        }
+
+        private IEnumerable<VehicleViewModel> ConvertFromVehicleToVehicleViewModel(IList<Vehicle> vehicles)
+        {
+            var result = new List<VehicleViewModel>(vehicles.Count);
 
             foreach (var vehicle in vehicles)
             {
-                vehicle.FuelTypesStr = ConvertFuelTypes(vehicle.FuelType);
+                result.Add(new VehicleViewModel
+                {
+                    Id = Helper.EncodeId(vehicle.Id),
+                    ModelName = vehicle.Model.ModelName,
+                    MakeName = vehicle.Model.Make.Name,
+                    EngineCapacity = vehicle.EngineCapacity,
+                    ExactModel = vehicle.ExactModel,
+                    FuelType = (short)vehicle.FuelTypes,
+                    ManufactureDate = vehicle.ManufactureDate,
+                    Power = vehicle.Power,
+                    RegNumber = vehicle.RegNumber,
+                    Type = vehicle.Type,
+                    FuelTypesStr = this.ConvertFuelTypes(vehicle.FuelTypes)
+                });
             }
 
-            return vehicles;
+            return result;
         }
 
         private FuelType CalculateFuelTpes(IEnumerable<FuelType> fuelTypes)
@@ -183,13 +165,13 @@
             return result;
         }
 
-        private List<string> ConvertFuelTypes(short fueltypes)
+        private List<string> ConvertFuelTypes(FuelType fuelTypes)
         {
             var enumList = Enum.GetValues(typeof(FuelType)).OfType<FuelType>().ToList();
             var fuelTypesStr = new List<string>();
             foreach (var item in enumList)
             {
-                if ((fueltypes & (short)item) > 0)
+                if ((fuelTypes & item) > 0)
                 {
                     fuelTypesStr.Add(Enum.GetName(typeof(FuelType), item));
                 }
@@ -204,7 +186,7 @@
             var fuelTypes = new List<FuelType>();
             foreach (var type in enumList)
             {
-                if (((short)fuelType & (short)type)>0)
+                if (((short)fuelType & (short)type) > 0)
                 {
                     fuelTypes.Add(type);
                 }
