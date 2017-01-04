@@ -1,11 +1,8 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4 col-lg-offset-4">
-            <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null"><span aria-hidden="true">&times;</span></button>
-                {{errorMessage}}
-            </div>
-
+            <app-error *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error>
+            
             <h4>Login</h4>
             <!-- Here we are declaring a local variable called loginForm and setting it to an instance of ngForm. 
             This is very important. 

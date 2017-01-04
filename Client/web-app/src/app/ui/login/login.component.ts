@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         event.preventDefault();
 
         if (!constants.VALIDATION_EMAIL_REGEX.test(email)) {
-            this.errorMessage = 'Невалиден email!';
+            this.errorMessage = 'Invalid email!';
 
             return;
         }
