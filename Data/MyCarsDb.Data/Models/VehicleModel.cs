@@ -9,7 +9,7 @@
         public int Id { get; set; }
 
         public int MakeId { get; set; }
-        public VehicleMake Make { get; set; }
+        public virtual VehicleMake Make { get; set; }
 
         public VehicleType VehicleType { get; set; }
 
