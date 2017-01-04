@@ -1,5 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+/** interface from mydatepicker component - that is hard to import */
+interface IDate {
+  year: number;
+  month: number;
+  day: number;
+}
+
 /** some kind of adapter to datepicker */
 @Component({
   selector: 'app-datepicker',
@@ -14,8 +21,9 @@ export class DatepickerComponent implements OnInit {
   @Input() placeholder: string;
   @Input() dateFormat: string;
   @Input() width: string;
+  @Input() showTodayBtn: boolean = true;
 
-  get bindableDate() {
+  get bindableDate(): IDate {
     if (!this.selectedDate) {
       return null;
     }
@@ -23,7 +31,7 @@ export class DatepickerComponent implements OnInit {
     if (this.selectedDate instanceof Date) {
       let year = this.selectedDate.getFullYear();
       let month = this.selectedDate.getMonth() + 1;
-      let day = this.selectedDate.getDate() ;
+      let day = this.selectedDate.getDate();
 
       return { year: year, month: month, day: day };
     }
@@ -31,9 +39,10 @@ export class DatepickerComponent implements OnInit {
     return null;
   };
 
-  options = {
+  options: any = {
+    showTodayBtn: true,
     todayBtnTxt: 'Today',
-    dateFormat: (this.dateFormat ? this.dateFormat : 'yyyy-mm-dd'),
+    dateFormat: 'yyyy-mm-dd',
     firstDayOfWeek: 'mo',
     sunHighlight: false,
     markCurrentDay: true,
@@ -53,15 +62,21 @@ export class DatepickerComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.dateFormat) {
       this.options.dateFormat = this.dateFormat;
     }
+
+    if (this.width) {
+      this.options.width = this.width;
+    }
+
+    this.options.showTodayBtn = this.showTodayBtn;
   }
 
-  onDateChanged(event: any) {
-    if (typeof event.date.year === 'number' 
-      && typeof event.date.month === 'number' 
+  onDateChanged(event: any): void {
+    if (typeof event.date.year === 'number'
+      && typeof event.date.month === 'number'
       && typeof event.date.day === 'number') {
       this.selectedDate = new Date(event.date.year, event.date.month - 1, event.date.day);
     } else {
