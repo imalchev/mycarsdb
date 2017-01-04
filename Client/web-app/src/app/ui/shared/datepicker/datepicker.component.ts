@@ -12,31 +12,62 @@ export class DatepickerComponent implements OnInit {
   @Output() selectedDateChange: EventEmitter<Date> = new EventEmitter<Date>();
 
   @Input() placeholder: string;
+  @Input() dateFormat: string;
+  @Input() width: string;
 
   get bindableDate() {
-    return { year: this.selectedDate.getFullYear(), month: this.selectedDate.getMonth() + 1, day: this.selectedDate.getDay() };
+    if (!this.selectedDate) {
+      return null;
+    }
+
+    if (this.selectedDate instanceof Date) {
+      let year = this.selectedDate.getFullYear();
+      let month = this.selectedDate.getMonth() + 1;
+      let day = this.selectedDate.getDate() ;
+
+      return { year: year, month: month, day: day };
+    }
+
+    return null;
   };
 
   options = {
-    showTodayBtn: false,
-    dateFormat: 'yyyy-mm',
+    todayBtnTxt: 'Today',
+    dateFormat: (this.dateFormat ? this.dateFormat : 'yyyy-mm-dd'),
     firstDayOfWeek: 'mo',
     sunHighlight: false,
-    customPlaceholderTxt: this.placeholder, // 'Manufacture date',
-      // height: '40px',
-    width: '200px',
-    inline: false,
-    selectionTxtFontSize: '16px',
-    showClearDateBtn: false,
+    markCurrentDay: true,
+    height: '34px',
+    width: '210px',
+    selectionTxtFontSize: '18px',
+    alignSelectorRight: false,
+    indicateInvalidDate: true,
+    showDateFormatPlaceholder: true,
+    editableMonthAndYear: true,
+    minYear: 1900,
+    componentDisabled: false,
+    inputValueRequired: false,
+    showClearDateBtn: true,
+    showSelectorArrow: true
   };
 
   constructor() { }
 
   ngOnInit() {
+    if (this.dateFormat) {
+      this.options.dateFormat = this.dateFormat;
+    }
   }
 
   onDateChanged(event: any) {
-    this.selectedDate = new Date(event.date.year, event.date.month - 1, event.date.day);
+    if (typeof event.date.year === 'number' 
+      && typeof event.date.month === 'number' 
+      && typeof event.date.day === 'number') {
+      this.selectedDate = new Date(event.date.year, event.date.month - 1, event.date.day);
+    } else {
+      this.selectedDate = null;
+    }
+
     this.selectedDateChange.emit(this.selectedDate);
   }
 }

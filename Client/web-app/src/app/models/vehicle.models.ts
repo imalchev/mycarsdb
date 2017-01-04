@@ -2,7 +2,7 @@ export interface VehicleModel {
    vehicleId: number;
    power: number;
    exactModel: string;
-   manufactureDate: string;
+   manufactureDate: Date;
    engineCapacity: number;
    type: string;
    regNumber: string;
