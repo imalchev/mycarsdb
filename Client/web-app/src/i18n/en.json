@@ -3,5 +3,8 @@
     "CAR_MODEL":"Car Model",
     "INFORMATION":"Information",
     "MANUFACTURE_DATE":"Manufacture Date"
+    },
+    "SIDEBAR":{
+        "HOME":"Home"
     }
 }
