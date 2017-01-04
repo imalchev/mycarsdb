@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { VehicleService } from '../../../services/vehicle.service';
 import { Http } from '@angular/http';
 import {Router} from '@angular/router';
+import { TranslateService } from 'ng2-translate';
 import * as vehicleModels from '../../../models/vehicle.models';
 
 @Component({
@@ -14,7 +15,9 @@ export class VehicleListComponent implements OnInit {
 @Input() vehicleFilter: string;
 
   private location: string = '';
-  constructor(private _router: Router) { }
+  constructor(private _router: Router, public translate: TranslateService) { 
+
+  }
 
   ngOnInit() {
 this.location = this._router.url;

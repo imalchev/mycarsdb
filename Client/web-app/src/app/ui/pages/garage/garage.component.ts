@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserVehiclesComponent} from '../../vehicle/userVehiclesList/user-vehicles.component';
+import { VehicleListComponent } from '../../shared/vehicle-list/vehicle-list.component';
 import {VehicleService} from '../../../services/vehicle.service';
 import * as vehicleModels from '../../../models/vehicle.models';
 import { slideInDownAnimation } from '../../shared/animations';
