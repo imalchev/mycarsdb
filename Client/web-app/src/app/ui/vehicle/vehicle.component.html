@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h3>{{pageTitle}}</h3>
   <app-error *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error>
-  <form #vehicleForm="ngForm" (submit)="addVehicle(model)">
+  <form #vehicleForm="ngForm" (submit)="save(model)">
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-addon"><span class="glyphicon glyphicon-registration-mark"></span></span>
@@ -43,7 +43,6 @@
                (dateChanged)="onDateChanged($event)"></my-date-picker>-->
       </div>
     </div>
-    {{ model.manufactureDate }}
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-addon"><span class="glyphicon glyphicon-fire"></span></span>
