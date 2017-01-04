@@ -86,11 +86,13 @@ export class VehicleComponent implements OnInit {
         this.activatedRoute.params.subscribe((params: Params) => id = params['id']);
         if (id) {
             this._vehicleService.getVehicleById(id)
-                .subscribe((vehicle: vehicleModels.VehicleModel) => { 
-                    this.model = vehicle;
-                    this.onMakeSelect(vehicle.makeId); 
-                }, 
+                 this._vehicleService.getVehicleById(id)
+                	.subscribe((vehicle: vehicleModels.VehicleModel) => { 
+                    	this.model = vehicle;
+                    	this.onMakeSelect(vehicle.makeId); 
+                	}, 
                     (response: string) => this.handleResponse(response));
+
             this.pageTitle = 'Edit Vehicle';
             this.vehicleExists = true;
         }

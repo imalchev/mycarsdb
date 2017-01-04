@@ -17,12 +17,11 @@ import { SidebarComponent }   from './ui/shared';
 import { AppRoutingModule }   from './app-routing.module';
 import { HomeComponent }      from './ui/pages/home/home.component';
 import { GarageComponent }    from './ui/pages/garage/garage.component';
-import { UserVehiclesComponent } from './ui/vehicle/userVehiclesList/user-vehicles.component';
-import { VehicleDetailsComponent } from './ui/vehicle/vehicle-details/vehicle-details.component';
 import { FilterVehiclePipe } from './ui/shared/pipes/filter-vehicle.pipe';
 import { FuelingComponent } from './ui/pages/fueling/fueling.component';
 import { DatepickerComponent } from './ui/shared/datepicker/datepicker.component';
 import { ErrorComponent } from './ui/shared/error/error.component';
+import { VehicleListComponent } from './ui/shared/vehicle-list/vehicle-list.component';
 
 
 @NgModule({
@@ -35,12 +34,11 @@ import { ErrorComponent } from './ui/shared/error/error.component';
     RegisterComponent,
     HomeComponent,
     GarageComponent,
-    UserVehiclesComponent,
-    VehicleDetailsComponent,
     FilterVehiclePipe,
     FuelingComponent,
     DatepickerComponent,
-    ErrorComponent
+    ErrorComponent,
+    VehicleListComponent
   ],
   imports: [
     BrowserModule,
