@@ -21,11 +21,15 @@ export class DatepickerComponent implements OnInit {
   @Input() placeholder: string;
   @Input() dateFormat: string;
   @Input() width: string;
-  @Input() showTodayBtn: boolean = true;
+  @Input() showTodayBtn: boolean = true;  
 
   get bindableDate(): IDate {
     if (!this.selectedDate) {
       return null;
+    }
+
+    if (typeof this.selectedDate === 'string') {
+      this.selectedDate = new Date(this.selectedDate);
     }
 
     if (this.selectedDate instanceof Date) {
@@ -72,6 +76,11 @@ export class DatepickerComponent implements OnInit {
     }
 
     this.options.showTodayBtn = this.showTodayBtn;
+
+    if (this.placeholder) {
+      this.options.showDateFormatPlaceholder = false;
+      this.options.customPlaceholderTxt = this.placeholder;
+    }
   }
 
   onDateChanged(event: any): void {

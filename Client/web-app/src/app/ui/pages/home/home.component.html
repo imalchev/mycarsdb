@@ -1,5 +1,6 @@
- <div class="input-group-btn search-panel">
-        <span class="input-group-addon">Search: </span>
-        <input type="text" class="form-control" placeholder="Start typing the exact model you are looking for..." [(ngModel)]='vehicleFilter' />
-    </div>
-<app-vehicle-list [vehicles]="vehicles"  [vehicleFilter]="vehicleFilter"></app-vehicle-list>
+<div class="input-group-btn search-panel">
+  <span class="input-group-addon">Search: </span>
+  <input type="text" class="form-control" [(ngModel)]="vehicleFilter" placeholder="Start typing the exact model you are looking for..."
+  />
+</div>
+<app-vehicle-list [vehicles]="vehicles" [vehicleFilter]="vehicleFilter"></app-vehicle-list>

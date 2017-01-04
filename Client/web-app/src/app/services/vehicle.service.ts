@@ -19,6 +19,15 @@ import * as constants from '../common/constants';
 
 @Injectable()
 export class VehicleService extends BaseHttpService {
+
+    private _transformVehicleDate(vehicle: vehicleModels.VehicleModel): (vehicleModels.VehicleModel) {
+        if (typeof vehicle.manufactureDate === 'string') {
+            vehicle.manufactureDate = new Date(vehicle.manufactureDate);
+        }        
+        
+        return vehicle;
+    }
+
     constructor(http: Http, private _authService: AuthService) {
         super(http);
     }
@@ -31,24 +40,16 @@ export class VehicleService extends BaseHttpService {
         let options = new RequestOptions({ headers: headers });
 
         return this._http.post(`${constants.BASE_API_URI}/vehicles/add`, body, options)
-            // .map((response: Response) => {
-            //     let jsonData: any = response.json();
-            //     return jsonData;
-            //     })
             .catch(this._handleError);
     }
 
-
-    editVehicle(vehicle: vehicleModels.VehicleModel): Observable<void | string> {
+    editVehicle(vehicleId: string, vehicle: vehicleModels.VehicleModel): Observable<void | string> {
         let body = JSON.stringify(vehicle);
         let headers = this._getJsonHeaders();
+
         this._authService.setAuthorizationHeader(headers);
         let options = new RequestOptions({ headers: headers });
-        return this._http.post(`${constants.BASE_API_URI}/vehicles/edit`, body, options)
-            // .map((response: Response) => {
-            //     let jsonData: any = response.json();
-            //     return jsonData;
-            //     })
+        return this._http.post(`${constants.BASE_API_URI}/vehicles/edit/${vehicleId}`, body, options)
             .catch(this._handleError);
     }
 
@@ -59,20 +60,31 @@ export class VehicleService extends BaseHttpService {
         this._authService.setAuthorizationHeader(headers);
         let options = new RequestOptions({ headers: headers });
         return this._http.get(`${constants.BASE_API_URI}/vehicles/getUserVehicles`, options)
-            .map((response: Response) => <vehicleModels.VehicleViewModel[]>response.json())
+            .map((response: Response) => {
+                let vehicles = <vehicleModels.VehicleViewModel[]>response.json();
+                vehicles.forEach(this._transformVehicleDate);
+                return vehicles;
+            })
             .catch(this._handleError);
     }
 
     getVehicleById(id): Observable<vehicleModels.VehicleModel | string> {
         return this._http.get(`${constants.BASE_API_URI}/vehicles/getVehicleById?id=${id}`)
-            .map((response: Response) => <vehicleModels.VehicleModel>response.json())
-            .catch(this._handleError);        
+            .map((response: Response) => { 
+                let vehicle = <vehicleModels.VehicleModel>response.json();
+                return this._transformVehicleDate(vehicle);
+             })
+            .catch(this._handleError);
     }
 
     getAllVehicles(): Observable<vehicleModels.VehicleViewModel[] | string> {
         let url = `${constants.BASE_API_URI}/vehicles/getAllVehicles`;
         return this._http.get(url)
-            .map((response: Response) => <vehicleModels.VehicleViewModel[]>response.json())
+            .map((response: Response) => {
+                let vehicles = <vehicleModels.VehicleViewModel[]>response.json();
+                vehicles.forEach(this._transformVehicleDate);
+                return vehicles;
+            })
             .catch(this._handleError);
     }
 

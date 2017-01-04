@@ -13,10 +13,9 @@ export class DashboardComponent implements OnInit {
     translate.setDefaultLang('en');
 
     let browserLang = translate.getBrowserLang();
-     translate.use(browserLang.match(/en|bg/) ? browserLang : 'en');
+    translate.use(browserLang.match(/en|bg/) ? browserLang : 'en');
   }
 
   ngOnInit() {
   }
-
 }

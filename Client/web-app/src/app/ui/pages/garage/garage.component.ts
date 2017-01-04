@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import * as vehicleModels from '../../../models/vehicle.models';
 import { VehicleService } from '../../../services/vehicle.service';
 import { VehicleListComponent } from '../../shared/vehicle-list/vehicle-list.component';
-import * as vehicleModels from '../../../models/vehicle.models';
 import { slideInDownAnimation } from '../../shared/animations';
 
 @Component({
@@ -18,7 +18,7 @@ export class GarageComponent implements OnInit {
 
   constructor(private _vehicleService: VehicleService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._vehicleService.getUserVehicles()
       .subscribe((vehicles: vehicleModels.VehicleViewModel[]) => this.vehicles = vehicles);
 

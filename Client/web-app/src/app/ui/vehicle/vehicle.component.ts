@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Http } from '@angular/http';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import * as vehicleModels from '../../models/vehicle.models';
@@ -11,11 +10,11 @@ import { VehicleService } from '../../services/vehicle.service';
     selector: 'app-vehicle',
     templateUrl: './vehicle.component.html',
     styleUrls: ['./vehicle.component.css'],
-    providers: [ VehicleService ]
+    providers: [VehicleService]
 })
 export class VehicleComponent implements OnInit {
     pageTitle = 'Add Vehicle';
-    vehicleExists: boolean = false;
+    vehicleId: string = null;
     errorMessage: string;
 
     availableVehicleTypes: vehicleModels.VehicleTypeModel[] = null;
@@ -24,7 +23,6 @@ export class VehicleComponent implements OnInit {
     availableVehicleModels: vehicleModels.VehicleModelModel[] = null;
 
     model: vehicleModels.VehicleModel = {
-        vehicleId: null,
         manufactureDate: null,
         power: null,
         exactModel: null,
@@ -35,40 +33,25 @@ export class VehicleComponent implements OnInit {
         modelId: null
     };
 
-    constructor(public _vehicleService: VehicleService, private router: Router, private activatedRoute: ActivatedRoute) {
-    }
-
-    save(vehicleForm: vehicleModels.VehicleModel): void {
-        if (!this.vehicleExists) {
-            this._vehicleService.addVehicle(this.model)
-                .subscribe(data => this.router.navigate(['/garage']),
-                (response: string) => this.errorMessage = response);
-        } else {
-            this._vehicleService.editVehicle(this.model)
-                .subscribe(data => this.router.navigate(['/garage']));
-        }
-    }
-
-    onMakeSelect(makeId): void {
-        this._vehicleService.getModels(makeId)
-            .subscribe((models: vehicleModels.VehicleModelModel[]) => this.availableVehicleModels = models,
-                (response: string) => this.handleResponse(response));
+    constructor(private _vehicleService: VehicleService, private _router: Router, private _activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        let id;
-        this.activatedRoute.params.subscribe((params: Params) => id = params['id']);
-        if (id) {
-            this._vehicleService.getVehicleById(id)                 
-                .subscribe((vehicle: vehicleModels.VehicleModel) => { 
-                    this.model = vehicle;
-                    this.onMakeSelect(vehicle.makeId); 
-                }, 
+        this._activatedRoute.params.subscribe((params: Params) => {
+            this.vehicleId = params['id'];
+            if (this.vehicleId) {
+                this._vehicleService.getVehicleById(this.vehicleId)
+                    .subscribe((vehicle: vehicleModels.VehicleModel) => {
+                        this.model = vehicle;
+                        this.onMakeSelect(vehicle.makeId);
+                    },
                     (response: string) => this.handleResponse(response));
 
-            this.pageTitle = 'Edit Vehicle';
-            this.vehicleExists = true;
-        }
+                this.pageTitle = 'Edit Vehicle';
+            }
+        });
+
+
 
         this._vehicleService.getVehicleTypes()
             .subscribe((types: vehicleModels.VehicleTypeModel[]) => this.availableVehicleTypes = types,
@@ -81,6 +64,23 @@ export class VehicleComponent implements OnInit {
         this._vehicleService.getMakes()
             .subscribe((makes: vehicleModels.VehicleMakeModel[]) => this.availableVehicleMakes = makes,
             (response: string) => this.handleResponse(response));
+    }
+
+    onMakeSelect(makeId): void {
+        this._vehicleService.getModels(makeId)
+            .subscribe((models: vehicleModels.VehicleModelModel[]) => this.availableVehicleModels = models,
+            (response: string) => this.handleResponse(response));
+    }
+
+    save(vehicleForm: vehicleModels.VehicleModel): void {
+        if (!this.vehicleId) {
+            this._vehicleService.addVehicle(this.model)
+                .subscribe(data => this._router.navigate(['/garage']),
+                (response: string) => this.errorMessage = response);
+        } else {
+            this._vehicleService.editVehicle(this.vehicleId, this.model)
+                .subscribe(data => this._router.navigate(['/garage']));
+        }
     }
 
     handleResponse(response: string): void {

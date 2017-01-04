@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { VehicleService } from '../../../services/vehicle.service';
-import { Http } from '@angular/http';
-import {Router} from '@angular/router';
 import * as vehicleModels from '../../../models/vehicle.models';
 
 @Component({
@@ -10,19 +10,19 @@ import * as vehicleModels from '../../../models/vehicle.models';
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
-@Input() vehicles: vehicleModels.VehicleViewModel[];
-@Input() vehicleFilter: string;
+  @Input() vehicles: vehicleModels.VehicleViewModel[];
+  @Input() vehicleFilter: string;
 
   private location: string = '';
-  constructor(private _router: Router) { 
 
+  constructor(private _router: Router) {
   }
 
-  ngOnInit() {
-this.location = this._router.url;
+  ngOnInit(): void {
+    this.location = this._router.url;
   }
 
-onSelect(encodedId: string) {
-      this._router.navigate(['/vehicle', encodedId]);
-   }
+  onSelect(vehicleId: string): void {
+    this._router.navigate(['/vehicle', vehicleId]);
+  }
 }

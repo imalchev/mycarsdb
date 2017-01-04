@@ -1,5 +1,4 @@
 export interface VehicleModel {
-   vehicleId: number;
    power: number;
    exactModel: string;
    manufactureDate: Date;
@@ -11,10 +10,10 @@ export interface VehicleModel {
 }
 
 export interface VehicleViewModel extends VehicleModel {
-    encodedId: string;
+    id: string;
     modelName: string;
     makeName: string;
-    fuelTypesStr: string[];  
+    fuelTypesStr: string[];
 }
 
 export interface VehicleMakeModel {
