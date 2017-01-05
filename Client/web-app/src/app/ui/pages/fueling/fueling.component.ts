@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { FuelingModel } from '../../../models/fueling.models';
+
 @Component({
   selector: 'app-fueling',
   templateUrl: './fueling.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FuelingComponent implements OnInit {
 
-  model: Object = {
+  model: FuelingModel = {
     date: new Date(),
     odometer: 123456,
     isSeriesBegining: false,
@@ -20,10 +22,10 @@ export class FuelingComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  saveFueling(fueling) {
+  save(fueling): void {
     console.log(fueling);
   }
 }

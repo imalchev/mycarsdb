@@ -17,6 +17,7 @@
       <div class="input-group">
         <span class="input-group-addon" title="select model"><span class="glyphicon glyphicon-registration-mark"></span></span>
         <select class="form-control" required="required" name="modelId" [(ngModel)]="model.modelId">
+          <option value="null" disabled selected>Select model</option>
           <option *ngFor="let model of availableVehicleModels" [value]="model.id">
             {{model.name}}
           </option>

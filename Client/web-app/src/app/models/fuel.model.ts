@@ -1,4 +1,4 @@
 export interface FuelModel {
-id: number;
-name: string;
+    id: number;
+    name: string;
 }
