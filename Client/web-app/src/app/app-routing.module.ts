@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent }       from './ui/login/login.component';
 import { RegisterComponent }    from './ui/register/register.component';
-import { VehicleComponent }     from './ui/vehicle/vehicle.component';
+import { VehicleComponent }     from './ui/pages/vehicle/vehicle.component';
 import { DashboardComponent }   from './ui/layout/dashboard/dashboard.component';
 import { HomeComponent }        from './ui/pages/home/home.component';
 import { GarageComponent }      from './ui/pages/garage/garage.component';

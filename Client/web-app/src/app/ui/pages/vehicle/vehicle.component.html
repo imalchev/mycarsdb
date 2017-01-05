@@ -6,7 +6,7 @@
       <div class="input-group">
         <span class="input-group-addon" title="select make"><span class="glyphicon glyphicon-registration-mark"></span></span>
         <select class="form-control" required="required" name="makeId" (change)="onMakeSelect($event.target.value)" [(ngModel)]="model.makeId">
-          <option value="" disabled selected>Select make</option>
+          <option value="null" disabled selected>Select make</option>
           <option *ngFor="let make of availableVehicleMakes" [value]="make.id">
             {{make.name}}
           </option>

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { helpers } from '../../../common';
+
 /** interface from mydatepicker component - that is hard to import */
 interface IDate {
   year: number;
@@ -24,15 +26,11 @@ export class DatepickerComponent implements OnInit {
   @Input() showTodayBtn: boolean = true;  
 
   get bindableDate(): IDate {
-    if (!this.selectedDate) {
-      return null;
-    }
-
     if (typeof this.selectedDate === 'string') {
       this.selectedDate = new Date(this.selectedDate);
     }
 
-    if (this.selectedDate instanceof Date) {
+    if (helpers.isDate(this.selectedDate)) {
       let year = this.selectedDate.getFullYear();
       let month = this.selectedDate.getMonth() + 1;
       let day = this.selectedDate.getDate();

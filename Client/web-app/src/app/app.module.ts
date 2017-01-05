@@ -10,12 +10,13 @@ import {TranslateModule} from 'ng2-translate';
 import { LocalStorageService, AuthService, VehicleService } from './services';
 import { AuthGuard }          from './common';
 import { AppComponent }       from './app.component';
-import { VehicleComponent }   from './ui/vehicle/vehicle.component';
+import { AppRoutingModule }   from './app-routing.module';
+
+import { VehicleComponent }   from './ui/pages/vehicle/vehicle.component';
 import { RegisterComponent }  from './ui/register/register.component';
 import { LoginComponent }     from './ui/login/login.component';
 import { DashboardComponent } from './ui/layout/dashboard/dashboard.component';
-import { SidebarComponent }   from './ui/shared';
-import { AppRoutingModule }   from './app-routing.module';
+import { SidebarComponent }   from './ui/layout/sidebar/sidebar.component';
 import { HomeComponent }      from './ui/pages/home/home.component';
 import { GarageComponent }    from './ui/pages/garage/garage.component';
 import { FilterVehiclePipe } from './ui/shared/pipes/filter-vehicle.pipe';

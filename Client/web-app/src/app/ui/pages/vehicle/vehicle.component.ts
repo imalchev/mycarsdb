@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import * as vehicleModels from '../../models/vehicle.models';
-import { FuelModel } from '../../models/fuel.model';
-import { VehicleService } from '../../services/vehicle.service';
+import * as vehicleModels from '../../../models/vehicle.models';
+import { FuelModel } from '../../../models/fuel.model';
+import { VehicleService } from '../../../services/vehicle.service';
 
 @Component({
     selector: 'app-vehicle',

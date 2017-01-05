@@ -26,108 +26,6 @@
                .Cast<FuelType>()
                .Select(t => new FuelTypeModel() { Id = (int)t, Name = t.ToString() }).ToList();
 
-        public VehiclesController()
-        {
-        }
-
-
-        [HttpPost]
-        [Authorize]
-        public async Task<IHttpActionResult> Add(DataTransferModels.VehicleModel model)
-        {
-            var userEmail = this.User.Identity.Name;
-            var user = await this.UserManager.FindByEmailAsync(userEmail);
-
-            var vehicle = new Vehicle
-            {
-                ModelId = model.ModelId,
-                EngineCapacity = model.EngineCapacity,
-                FuelTypes = this.CalculateFuelTpes(model.FuelTypes),
-                ExactModel = model.ExactModel,
-                RegNumber = model.RegNumber,
-                ManufactureDate = new DateTime(model.ManufactureDate.Year, model.ManufactureDate.Month, 1), // always set first day of the month
-                Power = model.Power,
-                Type = model.Type
-            };
-
-            this.DbContext.Vehicles.Add(vehicle);
-
-            var userToVehicle = new UserToVehicle
-            {
-                User = user,
-                Vehicle = vehicle,
-                AccessType = UserToVehicleAccessType.Administratior
-            };
-            this.DbContext.UsersToVehicles.Add(userToVehicle);
-
-            await this.DbContext.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Authorize]
-        public async Task<IHttpActionResult> Edit(int vehicleId, DataTransferModels.VehicleModel model)
-        {
-            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == vehicleId).FirstOrDefaultAsync();
-
-            vehicle.EngineCapacity = model.EngineCapacity;
-            vehicle.ExactModel = model.ExactModel;
-            vehicle.FuelTypes = CalculateFuelTpes(model.FuelTypes);
-            vehicle.ManufactureDate = model.ManufactureDate;
-            vehicle.ModelId = model.ModelId;
-            vehicle.Power = model.Power;
-            vehicle.RegNumber = model.RegNumber;
-            vehicle.Type = model.Type;
-
-            await this.DbContext.SaveChangesAsync();
-            return Ok();
-        }
-
-        public async Task<DataTransferModels.VehicleModel> GetVehicleById(string id)
-        {
-            var vehicleId = Helper.DecodeId(id);
-
-            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == vehicleId).FirstOrDefaultAsync();
-
-            var model = new DataTransferModels.VehicleModel()
-            {
-                ManufactureDate = vehicle.ManufactureDate,
-                EngineCapacity = vehicle.EngineCapacity,
-                Power = vehicle.Power,
-                ExactModel = vehicle.ExactModel,
-                RegNumber = vehicle.RegNumber,
-                ModelId = vehicle.ModelId,
-                Type = vehicle.Type,   
-                MakeId = vehicle.Model.MakeId                   
-            };
-
-            model.FuelTypes = this.GetFuelTypeList(vehicle.FuelTypes);
-            return model;
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IEnumerable<VehicleViewModel>> GetUserVehicles()
-        {
-            var userEmail = this.User.Identity.Name;
-            var user = await this.UserManager.FindByEmailAsync(userEmail);
-
-            var userVehicles = await this.DbContext.UsersToVehicles.Include(x => x.Vehicle.Model.Make)
-                .Where(x => x.UserId == user.Id)
-                .Select(x => x.Vehicle)
-                .ToListAsync();
-
-            return this.ConvertFromVehicleToVehicleViewModel(userVehicles);
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<VehicleViewModel>> GetAllVehicles()
-        {
-            var vehicles = await this.DbContext.Vehicles.Include(x => x.Model.Make).Select(x => x).ToListAsync();
-
-            return this.ConvertFromVehicleToVehicleViewModel(vehicles);
-        }
 
         private IEnumerable<VehicleViewModel> ConvertFromVehicleToVehicleViewModel(IList<Vehicle> vehicles)
         {
@@ -194,6 +92,112 @@
 
             return fuelTypes;
         }
+
+
+
+        public VehiclesController()
+        {
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IHttpActionResult> Add(DataTransferModels.VehicleModel model)
+        {
+            var userEmail = this.User.Identity.Name;
+            var user = await this.UserManager.FindByEmailAsync(userEmail);
+
+            var vehicle = new Vehicle
+            {
+                ModelId = model.ModelId,
+                EngineCapacity = model.EngineCapacity,
+                FuelTypes = this.CalculateFuelTpes(model.FuelTypes),
+                ExactModel = model.ExactModel,
+                RegNumber = model.RegNumber,
+                ManufactureDate = new DateTime(model.ManufactureDate.Year, model.ManufactureDate.Month, 1), // always set first day of the month
+                Power = model.Power,
+                Type = model.Type
+            };
+
+            this.DbContext.Vehicles.Add(vehicle);
+
+            var userToVehicle = new UserToVehicle
+            {
+                User = user,
+                Vehicle = vehicle,
+                AccessType = UserToVehicleAccessType.Administratior
+            };
+            this.DbContext.UsersToVehicles.Add(userToVehicle);
+
+            await this.DbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IHttpActionResult> Edit(int vehicleId, DataTransferModels.VehicleModel model)
+        {
+            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == vehicleId).FirstOrDefaultAsync();
+
+            vehicle.EngineCapacity = model.EngineCapacity;
+            vehicle.ExactModel = model.ExactModel;
+            vehicle.FuelTypes = CalculateFuelTpes(model.FuelTypes);
+            vehicle.ManufactureDate = model.ManufactureDate;
+            vehicle.ModelId = model.ModelId;
+            vehicle.Power = model.Power;
+            vehicle.RegNumber = model.RegNumber;
+            vehicle.Type = model.Type;
+
+            await this.DbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        public async Task<IHttpActionResult> GetVehicleById(string id)
+        {
+            var vehicleId = Helper.DecodeId(id);
+
+            var vehicle = await this.DbContext.Vehicles.Where(x => x.Id == vehicleId).FirstOrDefaultAsync();
+
+            var model = new DataTransferModels.VehicleModel()
+            {
+                ManufactureDate = vehicle.ManufactureDate,
+                EngineCapacity = vehicle.EngineCapacity,
+                Power = vehicle.Power,
+                ExactModel = vehicle.ExactModel,
+                RegNumber = vehicle.RegNumber,
+                ModelId = vehicle.ModelId,
+                Type = vehicle.Type,   
+                MakeId = vehicle.Model.MakeId                   
+            };
+
+            model.FuelTypes = this.GetFuelTypeList(vehicle.FuelTypes);
+            return Ok(model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IHttpActionResult> GetUserVehicles()
+        {
+            var userEmail = this.User.Identity.Name;
+            var user = await this.UserManager.FindByEmailAsync(userEmail);
+
+            var userVehicles = await this.DbContext.UsersToVehicles.Include(x => x.Vehicle.Model.Make)
+                .Where(x => x.UserId == user.Id)
+                .Select(x => x.Vehicle)
+                .ToListAsync();
+
+            return Ok(this.ConvertFromVehicleToVehicleViewModel(userVehicles));
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllVehicles()
+        {
+            var vehicles = await this.DbContext.Vehicles.Include(x => x.Model.Make).Select(x => x).ToListAsync();
+
+            return Ok(this.ConvertFromVehicleToVehicleViewModel(vehicles));
+        }
+
 
         [HttpGet]
         public List<VehicleMakeModel> GetMakes()
