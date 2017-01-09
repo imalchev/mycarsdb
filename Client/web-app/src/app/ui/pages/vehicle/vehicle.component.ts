@@ -9,8 +9,7 @@ import { VehicleService } from '../../../services/vehicle.service';
 @Component({
     selector: 'app-vehicle',
     templateUrl: './vehicle.component.html',
-    styleUrls: ['./vehicle.component.css'],
-    providers: [VehicleService]
+    styleUrls: ['./vehicle.component.css']    
 })
 export class VehicleComponent implements OnInit {
     pageTitle = 'Add Vehicle';
