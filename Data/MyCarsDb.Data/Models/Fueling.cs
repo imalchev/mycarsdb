@@ -2,11 +2,13 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
-    using MyCarsDb.Data.Common.Attributes;
-    using MyCarsDb.Data.Models.Enums;
 
-    public class Fueling
+    using MyCarsDb.Data.Common;
+    using MyCarsDb.Data.Common.Attributes;
+    using MyCarsDb.Data.Models.Contracts;
+    using MyCarsDb.Data.Models.Enums;    
+
+    public class Fueling : IEntity
     {
         [Key]
         [ForeignKey(nameof(Event))]
@@ -28,7 +30,7 @@
         [Decimal(12, 2)]
         public decimal? Amount { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength(DataModelConstants.FUELING_NOTE_MAX_LENGTH)]
         public string Note { get; set; }
     }
 }

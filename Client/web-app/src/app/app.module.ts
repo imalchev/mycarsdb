@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule }     from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
-import {TranslateModule} from 'ng2-translate';
+import { TranslateModule } from 'ng2-translate';
 
 import { LocalStorageService, AuthService, VehicleService } from './services';
 import { AuthGuard }          from './common';

@@ -1,8 +1,9 @@
 ﻿namespace MyCarsDb.Data.Models
 {
+    using MyCarsDb.Data.Models.Contracts;
     using MyCarsDb.Data.Models.Enums;
 
-    public class UserToVehicle
+    public class UserToVehicle : IEntity
     {
         public int Id { get; set; }
 

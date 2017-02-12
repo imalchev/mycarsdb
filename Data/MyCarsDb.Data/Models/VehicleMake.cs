@@ -2,11 +2,14 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class VehicleMake
+    using MyCarsDb.Data.Common;
+    using MyCarsDb.Data.Models.Contracts;    
+
+    public class VehicleMake : IEntity
     {
         public int Id { get; set; }
 
-        [MaxLength]
+        [MaxLength(DataModelConstants.VEHICLE_MAKE_NAME_MAX_LENGTH)]
         public string Name { get; set; }
     }
 }
