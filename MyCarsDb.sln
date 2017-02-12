@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCarsDb.Common.Mappings", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCarsDb.Business.Models", "Business\MyCarsDb.Business.Models\MyCarsDb.Business.Models.csproj", "{FADED60F-7B20-4A82-A24E-FAA72176185F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCarsDb.Tests.Data", "Tests\MyCarsDb.Tests.Data\MyCarsDb.Tests.Data.csproj", "{DE9C4996-48C8-48B9-82B3-53A5285D235C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{FADED60F-7B20-4A82-A24E-FAA72176185F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FADED60F-7B20-4A82-A24E-FAA72176185F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FADED60F-7B20-4A82-A24E-FAA72176185F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE9C4996-48C8-48B9-82B3-53A5285D235C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9C4996-48C8-48B9-82B3-53A5285D235C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9C4996-48C8-48B9-82B3-53A5285D235C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9C4996-48C8-48B9-82B3-53A5285D235C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,6 @@ Global
 		{C27539AF-F117-4014-B6AA-3B418285004F} = {E0EB3B3A-459B-4B61-B2B2-DF02920E4462}
 		{87F894F9-B0E3-4ECC-9ED4-36ACDC46DD30} = {46EC647A-CCC9-4FB4-B785-12ED9B0B5BE9}
 		{FADED60F-7B20-4A82-A24E-FAA72176185F} = {01B63FCD-9197-43F0-9D03-1DFA956AF384}
+		{DE9C4996-48C8-48B9-82B3-53A5285D235C} = {1128AB6F-AE1C-47C5-AAE3-22D31563D708}
 	EndGlobalSection
 EndGlobal
