@@ -21,7 +21,7 @@ namespace MyCarsDb.Web.Infrastructure
         {
             DatabaseConfig.Initialize();
 
-            // TODO: this assemblies should go to constants 
+            // TODO: this assembly name should go to constants 
             var mappingsAssembly = Assembly.Load("MyCarsDb.Common.Mappings");
             AutoMapperConfig.Execute(mappingsAssembly);
 
