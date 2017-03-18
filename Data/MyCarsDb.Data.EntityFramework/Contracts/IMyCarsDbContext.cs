@@ -25,9 +25,9 @@
         IDbSet<FuelCalculation> FuelCalculations { get; set; }
 
 
-        int SaveChanges();        
-        Task<int> SaveChangesAsync();        
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);               
+        int SaveChanges();
+        Task<int> SaveChangesAsync();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         
         DbSet<TEntity> Set<TEntity>() where TEntity 
             : class, IEntity;
