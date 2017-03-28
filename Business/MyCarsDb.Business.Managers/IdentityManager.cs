@@ -30,42 +30,30 @@
         {
             DM.User user = model.MapTo<BM.RegisterUser, DM.User>();
 
-            var identityResult = await _userManager.CreateAsync(user, model.Password);
+            IdentityResult identityResult = await _userManager.CreateAsync(user, model.Password);
 
-             return identityResult.MapTo<IdentityResult, BM.IdentityResult>();
+            return identityResult.MapTo<IdentityResult, BM.IdentityResult>();
         }
 
         public async Task<BM.User> FindAsync(string userName, string password)
         {
             DM.User user = await _userManager.FindAsync(userName, password);
-            if (user == null)
-            {
-                return null;
-            }
 
-            return user.MapTo<DM.User, BM.User>();
+            return user?.MapTo<DM.User, BM.User>();
         }
 
         public async Task<BM.User> FindByEmailAsync(string userEmail)
         {
             DM.User user = await _userManager.FindByEmailAsync(userEmail);
-            if (user == null)
-            {
-                return null;
-            }
 
-            return user.MapTo<DM.User, BM.User>();
+            return user?.MapTo<DM.User, BM.User>();
         }
 
         public async Task<BM.User> FindByIdAsync(int userId)
         {
-            DM.User user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return null;
-            }
+            DM.User user = await _userManager.FindByIdAsync(userId);            
 
-            return user.MapTo<DM.User, BM.User>();
+            return user?.MapTo<DM.User, BM.User>();
         }
 
         public async Task<ICollection<string>> GetRolesAsync(int userId)

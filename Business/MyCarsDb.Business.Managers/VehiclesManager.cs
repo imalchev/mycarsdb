@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Linq;
 
     using BM = MyCarsDb.Business.Models;
     using MyCarsDb.Business.Managers.Contracts;
     using MyCarsDb.Common.Utility.Extensions;
     using MyCarsDb.Data.Contracts;
-    using DM = MyCarsDb.Data.Models;
-    using System.Linq;
+    using DM = MyCarsDb.Data.Models;    
 
     public class VehiclesManager : IVehiclesManager
     {

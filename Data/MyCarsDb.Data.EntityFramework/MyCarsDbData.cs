@@ -16,12 +16,20 @@
         private IUsersDbRepository _usersDbRepository;
         private IRolesDbRepository _rolesDbRepository;
         private IVehiclesDbRepository _vehiclesRepository;
+        private IVehicleMakesDbRepository _vehicleMakesRepository;
+        private IVehicleModelsDbRepository _vehicleModelsRepository;
 
         public MyCarsDbData(IMyCarsDbContext dbContext)
         {
+            if (dbContext == null)
+            {
+                throw new ArgumentNullException(nameof(dbContext));
+            }
+
             _dbContext = dbContext;
         }
 
+        // TODO user some kind of factory instead of "new WhateverRepository()"
         public IRolesDbRepository RolesRepository
         {
             get
@@ -58,6 +66,32 @@
                 }
 
                 return _vehiclesRepository;
+            }
+        }
+
+        public IVehicleMakesDbRepository VehicleMakesRepository
+        {
+            get
+            {
+                if (_vehiclesRepository == null)
+                {
+                    _vehicleMakesRepository = new VehicleMakesEfRepository(_dbContext);
+                }
+
+                return _vehicleMakesRepository;
+            }
+        }
+
+        public IVehicleModelsDbRepository VehicleModelsRepository
+        {
+            get
+            {
+                if (_vehicleModelsRepository == null)
+                {
+                    _vehicleModelsRepository = new VehicleModelsEfRepository(_dbContext);
+                }
+
+                return _vehicleModelsRepository;
             }
         }
 

@@ -19,6 +19,11 @@
 
         public async Task<User> FindByUserNameAsync(string username)
         {
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+
             return await this.DbSet
                 .Where(x => x.UserName == username)
                 .FirstOrDefaultAsync();

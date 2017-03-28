@@ -29,7 +29,7 @@ namespace MyCarsDb.Web.Infrastructure
 
             Container container = SimpleInjectorConfig.Register(app, httpConfig);
 
-            // Рegisters WebApi routes
+            // Registers WebApi routes
             WebApiConfig.Register(httpConfig);
 
             httpConfig.EnsureInitialized();

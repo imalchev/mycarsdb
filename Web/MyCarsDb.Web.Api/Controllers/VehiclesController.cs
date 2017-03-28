@@ -35,7 +35,7 @@
         [Authorize]
         public async Task<IHttpActionResult> Edit(int vehicleId, Vehicle vehicle)
         {
-            // TO DO: implement ......
+            // TO DO: implement ...... vehicleId should be encoded some way
 
             return Ok();
         }
@@ -63,19 +63,7 @@
         }
 
 
-        [HttpGet]
-        public async Task<IHttpActionResult> GetMakes()
-        {
-            // Maybe this should go to some MakeAndModels controller that purpos is 
-
-            return Ok();            
-        }
-
-        [HttpGet]
-        public async Task<IHttpActionResult> GetModelsByMakeId(int id)
-        {
-            return Ok();
-        }
+        
 
         [HttpGet]
         public async Task<IHttpActionResult> GetVehicleTypes()

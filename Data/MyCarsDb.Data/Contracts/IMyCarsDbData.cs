@@ -9,6 +9,8 @@
         IUsersDbRepository UsersRepository { get; }
         IRolesDbRepository RolesRepository { get; }
         IVehiclesDbRepository VehiclesRepository { get; }
+        IVehicleMakesDbRepository VehicleMakesRepository { get; }
+        IVehicleModelsDbRepository VehicleModelsRepository { get; }
 
         Task SaveChangesAsync();
     }

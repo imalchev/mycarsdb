@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCarsDb.Data.EntityFramework</RootNamespace>
     <AssemblyName>MyCarsDb.Data.EntityFramework</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,6 +72,8 @@
     <Compile Include="Repositories\EfGenericRepository{TEntity}.cs" />
     <Compile Include="Repositories\RolesEfRepository.cs" />
     <Compile Include="Repositories\UsersEfRepository.cs" />
+    <Compile Include="Repositories\VehicleMakesEfRepository.cs" />
+    <Compile Include="Repositories\VehicleModelsEfRepository.cs" />
     <Compile Include="Repositories\VehiclesEfRepository.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyCarsDb.UnitTests</RootNamespace>
     <AssemblyName>MyCarsDb.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSubstitute, Version=2.0.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NSubstitute.2.0.2\lib\net45\NSubstitute.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,7 +47,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Managers\VehicleMakesManagerTests\GetAllMakesAsync_Should.cs" />
+    <Compile Include="Business\Managers\VehicleMakesManagerTests\GetAllModelsByMakeIdAsync_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Business\Managers\IdentityManagerTests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Business\MyCarsDb.Business.Managers\MyCarsDb.Business.Managers.csproj">
+      <Project>{644cfba4-0d5c-415c-a111-e0f0dedf2605}</Project>
+      <Name>MyCarsDb.Business.Managers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Business\MyCarsDb.Business.Models\MyCarsDb.Business.Models.csproj">
+      <Project>{faded60f-7b20-4a82-a24e-faa72176185f}</Project>
+      <Name>MyCarsDb.Business.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\MyCarsDb.Common.Mappings\MyCarsDb.Common.Mappings.csproj">
+      <Project>{87f894f9-b0e3-4ecc-9ed4-36acdc46dd30}</Project>
+      <Name>MyCarsDb.Common.Mappings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\MyCarsDb.Common.Utility\MyCarsDb.Common.Utility.csproj">
+      <Project>{df52f658-f84d-48d5-a662-3337e7f8901a}</Project>
+      <Name>MyCarsDb.Common.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\MyCarsDb.Data\MyCarsDb.Data.csproj">
+      <Project>{b8b38ac9-0927-4df3-b261-daa9661ce572}</Project>
+      <Name>MyCarsDb.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

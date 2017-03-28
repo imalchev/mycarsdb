@@ -19,6 +19,11 @@
 
         public async Task<Role> GetByNameAsync(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             return await this.DbSet
                 .Where(x => x.Name == name)
                 .SingleOrDefaultAsync();
