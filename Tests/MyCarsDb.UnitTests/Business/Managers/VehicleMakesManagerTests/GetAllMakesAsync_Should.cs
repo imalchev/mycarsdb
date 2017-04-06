@@ -25,7 +25,7 @@
             var sut = new VehicleMakesManager(myCarsDbDataStub);
 
             // Act
-            var allMakes = sut.GetAllMakesAsync();
+            sut.GetAllMakesAsync();
 
             // Assert
             vehicleMakesRepositoryMock.Received().GetAllMakesOrderdByNameAsync();
