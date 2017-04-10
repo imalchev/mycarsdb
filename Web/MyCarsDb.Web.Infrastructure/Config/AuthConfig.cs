@@ -33,7 +33,7 @@
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),
 
                 // TO DO: Set to false in production !
-                AllowInsecureHttp = true,                
+                AllowInsecureHttp = true,
             };
             app.UseOAuthAuthorizationServer(OAuthOptions);
 

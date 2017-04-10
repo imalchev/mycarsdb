@@ -6,5 +6,5 @@ export const VALIDATION_EMAIL_REGEX: RegExp =
 
 export const UNEXPECTED_RESPONSE = 'Unexpected response from server!';
 export const UNAUTHORIZED = 'You are not authoarized!';
-export const CHECK_INTERNET = 'Server is not accessible. Check you internet connection.';
+export const CHECK_INTERNET = 'Server is not accessible. Check your internet connection.';
 export const INVALID_REQUEST_ADDRESS = 'Web adress is not valid';
