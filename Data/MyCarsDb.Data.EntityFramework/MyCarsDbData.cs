@@ -29,7 +29,7 @@
             _dbContext = dbContext;
         }
 
-        // TODO user some kind of factory instead of "new WhateverRepository()"
+        // TODO: use some kind of factory instead of "new WhateverRepository()"
         public IRolesDbRepository RolesRepository
         {
             get
