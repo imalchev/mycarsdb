@@ -55,7 +55,7 @@ export class AuthService extends BaseHttpService {
             .map((response: Response) => {
                 let jsonData: SuccessLoginResponseModel = response.json();
 
-                // emit successfull autentication
+                // emit successful authentication
                 this._authEvent.next(true);
                 return this._onLoginSucceed(jsonData, username);
             })
