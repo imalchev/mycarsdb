@@ -1,9 +1,8 @@
 ﻿namespace MyCarsDb.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNet.Identity;
 
