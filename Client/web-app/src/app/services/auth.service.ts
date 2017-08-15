@@ -73,6 +73,7 @@ export class AuthService extends BaseHttpService {
         let options = new RequestOptions({ headers: headers });
 
         return this._http.post(url, body, options)
+            .map(x => undefined)
             .catch(this._handleError);
     }
 

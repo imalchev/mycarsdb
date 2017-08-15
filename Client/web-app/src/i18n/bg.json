@@ -1,10 +1,10 @@
 {
-    "VEHICLE":{
-    "CAR_MODEL":"Модел",
-    "INFORMATION":"Информация",
-    "MANUFACTURE_DATE":"Дата на производство"
-    },
-    "SIDEBAR":{
-        "HOME":"Начало"
-    }
+  "VEHICLE": {
+    "CAR_MODEL": "Модел",
+    "INFORMATION": "Информация",
+    "MANUFACTURE_DATE": "Дата на производство"
+  },
+  "SIDEBAR": {
+    "HOME": "Начало"
+  }
 }

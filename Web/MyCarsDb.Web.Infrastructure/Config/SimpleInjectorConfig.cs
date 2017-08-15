@@ -33,7 +33,7 @@
             // identity
             container.Register<IUserManager, UserManager>(Lifestyle.Scoped);
             container.Register<IUserStore<User, int>, UserStore>(Lifestyle.Scoped);
-            container.Register<IUserTokenProvider<User, int>>(GetDataProtectionProvider, Lifestyle.Scoped);
+            container.Register<IUserTokenProvider<User, int>>(GetUserTokenProvider, Lifestyle.Scoped);
 
             // data
             container.Register<IMyCarsDbData, MyCarsDbData>(Lifestyle.Scoped);
@@ -62,12 +62,12 @@
             return container;
         }
 
-        private static DataProtectorTokenProvider<User, int> GetDataProtectionProvider()
-        {
-            // IdentityFactoryOptions<UserManager> options;
+        private static DataProtectorTokenProvider<User, int> GetUserTokenProvider()
+        {            
             var dataProtectionProvider = new DpapiDataProtectionProvider("IR");
 
-            return new DataProtectorTokenProvider<User, int>(dataProtectionProvider.Create("IR Dpapi protection provider"));
+            var dataProtector = dataProtectionProvider.Create("IR Dpapi protection provider");
+            return new DataProtectorTokenProvider<User, int>(dataProtector);
         }
     }
 }

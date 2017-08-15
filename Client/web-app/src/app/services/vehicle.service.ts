@@ -40,6 +40,7 @@ export class VehicleService extends BaseHttpService {
         let options = new RequestOptions({ headers: headers });
 
         return this._http.post(`${constants.BASE_API_URI}/vehicles/add`, body, options)
+            .map(r => undefined)
             .catch(this._handleError);
     }
 
@@ -50,6 +51,7 @@ export class VehicleService extends BaseHttpService {
         this._authService.setAuthorizationHeader(headers);
         let options = new RequestOptions({ headers: headers });
         return this._http.post(`${constants.BASE_API_URI}/vehicles/edit/${vehicleId}`, body, options)
+            .map(r => undefined)
             .catch(this._handleError);
     }
 

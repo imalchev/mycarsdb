@@ -1,10 +1,10 @@
 {
-    "VEHICLE":{
-    "CAR_MODEL":"Car Model",
-    "INFORMATION":"Information",
-    "MANUFACTURE_DATE":"Manufacture Date"
+    "VEHICLE": {
+        "CAR_MODEL": "Car Model",
+        "INFORMATION": "Information",
+        "MANUFACTURE_DATE": "Manufacture Date"
     },
-    "SIDEBAR":{
-        "HOME":"Home"
+    "SIDEBAR": {
+        "HOME": "Home"
     }
 }
